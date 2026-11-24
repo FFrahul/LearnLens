@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "standard",
+  "specification": {
+    "path": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\candidate.json",
+    "sha256": "7a7cf6e9ab85212a166cca4d8aedee23e5e9ee47e00490d3b3e84f2f6b426b05",
+    "bytes": 27292
+  },
+  "artifact": {
+    "path": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+    "sha256": "df18d779035734532bfd5bc9f3c70561d691eb8a252e6d8a743f7e638ded4ea3",
+    "bytes": 881504
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3\\learnlens-end-to-end.finalize.json",
+    "summaryReceipt": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3\\learnlens-end-to-end.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3\\learnlens-end-to-end.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-18T07:51:13.897Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 5248,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

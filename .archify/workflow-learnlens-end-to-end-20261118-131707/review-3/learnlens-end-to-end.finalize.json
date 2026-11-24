@@ -1,0 +1,5540 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "standard",
+  "startedAt": "2026-11-18T08:04:41.508Z",
+  "specification": {
+    "path": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\candidate.json",
+    "sha256": "7a7cf6e9ab85212a166cca4d8aedee23e5e9ee47e00490d3b3e84f2f6b426b05",
+    "bytes": 27292
+  },
+  "artifact": {
+    "path": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+    "sha256": "df18d779035734532bfd5bc9f3c70561d691eb8a252e6d8a743f7e638ded4ea3",
+    "bytes": 881504
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\Dhruva kumar J\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "workflow",
+        "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\candidate.json",
+        "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "--quality",
+        "standard",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "7a7cf6e9ab85212a166cca4d8aedee23e5e9ee47e00490d3b3e84f2f6b426b05",
+          "bytes": 27292
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "standard",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 41,
+          "compositionIssues": [
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "point": [
+                1169,
+                491
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                780,
+                792
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "ollama_direct_response",
+                "from": "ollama",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "point": [
+                1169,
+                533
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "point": [
+                761,
+                328
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                780,
+                284
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "point": [
+                1182,
+                243
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                780,
+                801
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "otherRelationship": {
+                "id": "question_to_assessment",
+                "from": "question_input",
+                "to": "assessment_agent",
+                "label": "",
+                "collectionIndex": 24,
+                "artifactIndex": 25
+              },
+              "point": [
+                1182,
+                293
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                679,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                679,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "point": [
+                679,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                578,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                578,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                487,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                487,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "question_to_planner",
+                "from": "question_input",
+                "to": "query_planner",
+                "label": "",
+                "collectionIndex": 25,
+                "artifactIndex": 26
+              },
+              "point": [
+                487,
+                161
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "point": [
+                597,
+                532
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 85,
+              "from": [
+                687,
+                792
+              ],
+              "to": [
+                772,
+                792
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 159,
+              "from": [
+                788,
+                284
+              ],
+              "to": [
+                947,
+                284
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 147,
+              "from": [
+                780,
+                336
+              ],
+              "to": [
+                780,
+                483
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 307,
+              "from": [
+                780,
+                292
+              ],
+              "to": [
+                780,
+                599
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 1,
+              "overlapLength": 65.5,
+              "from": [
+                761,
+                407.5
+              ],
+              "to": [
+                761,
+                473
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3,
+              "overlapLength": 170,
+              "from": [
+                578,
+                623
+              ],
+              "to": [
+                578,
+                793
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 147,
+              "from": [
+                780,
+                336
+              ],
+              "to": [
+                780,
+                483
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "intake_pdf",
+                "from": "question_input",
+                "to": "pdf_ingest",
+                "label": "",
+                "collectionIndex": 9,
+                "artifactIndex": 10
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 43,
+              "from": [
+                32,
+                192
+              ],
+              "to": [
+                32,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 1,
+              "overlapLength": 27,
+              "from": [
+                578,
+                208
+              ],
+              "to": [
+                578,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                788,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "mastery_to_sqlite",
+                "from": "learner_mastery",
+                "to": "sqlite",
+                "label": "",
+                "collectionIndex": 16,
+                "artifactIndex": 17
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                788,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 43,
+              "from": [
+                780,
+                192
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 37,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                245
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "otherRelationship": {
+                "id": "mastery_to_sqlite",
+                "from": "learner_mastery",
+                "to": "sqlite",
+                "label": "",
+                "collectionIndex": 16,
+                "artifactIndex": 17
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 24,
+              "from": [
+                772,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 37,
+              "from": [
+                780,
+                747
+              ],
+              "to": [
+                780,
+                784
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "ollama_direct_response",
+                "from": "ollama",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "otherRelationship": {
+                "id": "question_to_assessment",
+                "from": "question_input",
+                "to": "assessment_agent",
+                "label": "",
+                "collectionIndex": 24,
+                "artifactIndex": 25
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 158,
+              "from": [
+                1198,
+                127
+              ],
+              "to": [
+                1198,
+                285
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 2,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 186,
+              "from": [
+                586,
+                200
+              ],
+              "to": [
+                772,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "retrieval_to_verifier",
+                "from": "hybrid_retrieval",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 29,
+                "artifactIndex": 30
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                605,
+                491
+              ],
+              "to": [
+                613,
+                491
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 2018,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\Dhruva kumar J\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "workflow",
+        "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\candidate.json",
+        "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "--quality",
+        "standard",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "0a69a9e9-edcc-4199-b256-2456ce5cb89b",
+        "ok": true,
+        "command": "deliver",
+        "type": "workflow",
+        "input": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\candidate.json",
+        "output": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "specification": {
+          "sha256": "7a7cf6e9ab85212a166cca4d8aedee23e5e9ee47e00490d3b3e84f2f6b426b05",
+          "bytes": 27292
+        },
+        "artifact": {
+          "sha256": "df18d779035734532bfd5bc9f3c70561d691eb8a252e6d8a743f7e638ded4ea3",
+          "bytes": 881504
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "standard",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 41,
+          "compositionIssues": [
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "point": [
+                1169,
+                491
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                780,
+                792
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "ollama_direct_response",
+                "from": "ollama",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "point": [
+                1169,
+                533
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "point": [
+                761,
+                328
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                780,
+                284
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "point": [
+                1182,
+                243
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                780,
+                801
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "otherRelationship": {
+                "id": "question_to_assessment",
+                "from": "question_input",
+                "to": "assessment_agent",
+                "label": "",
+                "collectionIndex": 24,
+                "artifactIndex": 25
+              },
+              "point": [
+                1182,
+                293
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                679,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                679,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "point": [
+                679,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                578,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                578,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                487,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                487,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "question_to_planner",
+                "from": "question_input",
+                "to": "query_planner",
+                "label": "",
+                "collectionIndex": 25,
+                "artifactIndex": 26
+              },
+              "point": [
+                487,
+                161
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "point": [
+                597,
+                532
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 85,
+              "from": [
+                687,
+                792
+              ],
+              "to": [
+                772,
+                792
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 159,
+              "from": [
+                788,
+                284
+              ],
+              "to": [
+                947,
+                284
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 147,
+              "from": [
+                780,
+                336
+              ],
+              "to": [
+                780,
+                483
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 307,
+              "from": [
+                780,
+                292
+              ],
+              "to": [
+                780,
+                599
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 1,
+              "overlapLength": 65.5,
+              "from": [
+                761,
+                407.5
+              ],
+              "to": [
+                761,
+                473
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3,
+              "overlapLength": 170,
+              "from": [
+                578,
+                623
+              ],
+              "to": [
+                578,
+                793
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 147,
+              "from": [
+                780,
+                336
+              ],
+              "to": [
+                780,
+                483
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "intake_pdf",
+                "from": "question_input",
+                "to": "pdf_ingest",
+                "label": "",
+                "collectionIndex": 9,
+                "artifactIndex": 10
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 43,
+              "from": [
+                32,
+                192
+              ],
+              "to": [
+                32,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 1,
+              "overlapLength": 27,
+              "from": [
+                578,
+                208
+              ],
+              "to": [
+                578,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                788,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "mastery_to_sqlite",
+                "from": "learner_mastery",
+                "to": "sqlite",
+                "label": "",
+                "collectionIndex": 16,
+                "artifactIndex": 17
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                788,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 43,
+              "from": [
+                780,
+                192
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 37,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                245
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "otherRelationship": {
+                "id": "mastery_to_sqlite",
+                "from": "learner_mastery",
+                "to": "sqlite",
+                "label": "",
+                "collectionIndex": 16,
+                "artifactIndex": 17
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 24,
+              "from": [
+                772,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 37,
+              "from": [
+                780,
+                747
+              ],
+              "to": [
+                780,
+                784
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "ollama_direct_response",
+                "from": "ollama",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "otherRelationship": {
+                "id": "question_to_assessment",
+                "from": "question_input",
+                "to": "assessment_agent",
+                "label": "",
+                "collectionIndex": 24,
+                "artifactIndex": 25
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 158,
+              "from": [
+                1198,
+                127
+              ],
+              "to": [
+                1198,
+                285
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 2,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 186,
+              "from": [
+                586,
+                200
+              ],
+              "to": [
+                772,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "retrieval_to_verifier",
+                "from": "hybrid_retrieval",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 29,
+                "artifactIndex": 30
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                605,
+                491
+              ],
+              "to": [
+                613,
+                491
+              ]
+            }
+          ]
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 276,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\Dhruva kumar J\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "check",
+        "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "artifact": {
+          "sha256": "df18d779035734532bfd5bc9f3c70561d691eb8a252e6d8a743f7e638ded4ea3",
+          "bytes": 881504
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": [
+              "[composition/proper-crossing] standard relationship id \"assessment_to_fallback\" (\"assessment_agent\" -> \"assessment_fallback\") crosses relationship id \"citations_to_final\" (\"verified_citations\" -> \"final_answer\") at [1169, 491]",
+              "[composition/proper-crossing] standard relationship id \"assessment_to_fallback\" (\"assessment_agent\" -> \"assessment_fallback\") crosses relationship id \"mastery_to_recovery\" (\"learner_mastery\" -> \"recovery_engine\") at [780, 792]",
+              "[composition/proper-crossing] standard relationship id \"assessment_to_fallback\" (\"assessment_agent\" -> \"assessment_fallback\") crosses relationship id \"ollama_direct_response\" (\"ollama\" -> \"final_answer\") at [1169, 533]",
+              "[composition/proper-crossing] standard relationship id \"assessment_to_verifier\" (\"assessment_agent\" -> \"source_verifier\") crosses relationship id \"image_to_ollama\" (\"image_ingest\" -> \"ollama\") at [761, 328]",
+              "[composition/proper-crossing] standard relationship id \"assessment_to_verifier\" (\"assessment_agent\" -> \"source_verifier\") crosses relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") at [780, 284]",
+              "[composition/proper-crossing] standard relationship id \"chunk_to_kb\" (\"chunking\" -> \"session_kb\") crosses relationship id \"citations_to_final\" (\"verified_citations\" -> \"final_answer\") at [1182, 243]",
+              "[composition/proper-crossing] standard relationship id \"chunk_to_kb\" (\"chunking\" -> \"session_kb\") crosses relationship id \"mastery_to_recovery\" (\"learner_mastery\" -> \"recovery_engine\") at [780, 801]",
+              "[composition/proper-crossing] standard relationship id \"citations_to_final\" (\"verified_citations\" -> \"final_answer\") crosses relationship id \"question_to_assessment\" (\"question_input\" -> \"assessment_agent\") at [1182, 293]",
+              "[composition/proper-crossing] standard relationship id \"intake_image\" (\"question_input\" -> \"image_ingest\") crosses relationship id \"pdf_to_extract\" (\"pdf_ingest\" -> \"text_extract\") at [679, 184]",
+              "[composition/proper-crossing] standard relationship id \"intake_image\" (\"question_input\" -> \"image_ingest\") crosses relationship id \"ppt_to_extract\" (\"ppt_ingest\" -> \"text_extract\") at [679, 200]",
+              "[composition/proper-crossing] standard relationship id \"intake_image\" (\"question_input\" -> \"image_ingest\") crosses relationship id \"video_to_segments\" (\"video_ingest\" -> \"text_extract\") at [679, 200]",
+              "[composition/proper-crossing] standard relationship id \"intake_ppt\" (\"question_input\" -> \"ppt_ingest\") crosses relationship id \"pdf_to_extract\" (\"pdf_ingest\" -> \"text_extract\") at [578, 184]",
+              "[composition/proper-crossing] standard relationship id \"intake_ppt\" (\"question_input\" -> \"ppt_ingest\") crosses relationship id \"ppt_to_extract\" (\"ppt_ingest\" -> \"text_extract\") at [578, 200]",
+              "[composition/proper-crossing] standard relationship id \"intake_video\" (\"question_input\" -> \"video_ingest\") crosses relationship id \"pdf_to_extract\" (\"pdf_ingest\" -> \"text_extract\") at [487, 184]",
+              "[composition/proper-crossing] standard relationship id \"intake_video\" (\"question_input\" -> \"video_ingest\") crosses relationship id \"ppt_to_extract\" (\"ppt_ingest\" -> \"text_extract\") at [487, 200]",
+              "[composition/proper-crossing] standard relationship id \"intake_video\" (\"question_input\" -> \"video_ingest\") crosses relationship id \"question_to_planner\" (\"question_input\" -> \"query_planner\") at [487, 161]",
+              "[composition/proper-crossing] standard relationship id \"mastery_to_misconception\" (\"learner_mastery\" -> \"misconception_agent\") crosses relationship id \"verifier_to_refusal\" (\"source_verifier\" -> \"refused_answer\") at [597, 532]"
+            ]
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": [
+              "[composition/ambiguous-corridor] standard relationship id \"assessment_to_fallback\" (\"assessment_agent\" -> \"assessment_fallback\") shares a 85px corridor with relationship id \"verifier_to_refusal\" (\"source_verifier\" -> \"refused_answer\") at [687, 792] -> [772, 792]",
+              "[composition/ambiguous-corridor] standard relationship id \"assessment_to_mastery\" (\"assessment_agent\" -> \"learner_mastery\") shares a 159px corridor with relationship id \"assessment_to_verifier\" (\"assessment_agent\" -> \"source_verifier\") at [788, 284] -> [947, 284]",
+              "[composition/ambiguous-corridor] standard relationship id \"assessment_to_mastery\" (\"assessment_agent\" -> \"learner_mastery\") shares a 147px corridor with relationship id \"image_to_ollama\" (\"image_ingest\" -> \"ollama\") at [780, 336] -> [780, 483]",
+              "[composition/ambiguous-corridor] standard relationship id \"assessment_to_mastery\" (\"assessment_agent\" -> \"learner_mastery\") shares a 307px corridor with relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") at [780, 292] -> [780, 599]",
+              "[composition/ambiguous-corridor] standard relationship id \"assessment_to_mastery\" (\"assessment_agent\" -> \"learner_mastery\") shares a 14px corridor with relationship id \"verifier_to_tutor\" (\"source_verifier\" -> \"tutor_agent\") at [780, 382.5] -> [780, 396.5]",
+              "[composition/ambiguous-corridor] standard relationship id \"assessment_to_verifier\" (\"assessment_agent\" -> \"source_verifier\") shares a 65.5px corridor with relationship id \"verifier_to_tutor\" (\"source_verifier\" -> \"tutor_agent\") at [761, 407.5] -> [761, 473]",
+              "[composition/ambiguous-corridor] standard relationship id \"chunk_to_kb\" (\"chunking\" -> \"session_kb\") shares a 170px corridor with relationship id \"mastery_to_misconception\" (\"learner_mastery\" -> \"misconception_agent\") at [578, 623] -> [578, 793]",
+              "[composition/ambiguous-corridor] standard relationship id \"image_to_ollama\" (\"image_ingest\" -> \"ollama\") shares a 147px corridor with relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") at [780, 336] -> [780, 483]",
+              "[composition/ambiguous-corridor] standard relationship id \"image_to_ollama\" (\"image_ingest\" -> \"ollama\") shares a 14px corridor with relationship id \"verifier_to_tutor\" (\"source_verifier\" -> \"tutor_agent\") at [780, 382.5] -> [780, 396.5]",
+              "[composition/ambiguous-corridor] standard relationship id \"intake_pdf\" (\"question_input\" -> \"pdf_ingest\") shares a 43px corridor with relationship id \"pdf_to_extract\" (\"pdf_ingest\" -> \"text_extract\") at [32, 192] -> [32, 235]",
+              "[composition/ambiguous-corridor] standard relationship id \"intake_ppt\" (\"question_input\" -> \"ppt_ingest\") shares a 27px corridor with relationship id \"video_to_segments\" (\"video_ingest\" -> \"text_extract\") at [578, 208] -> [578, 235]",
+              "[composition/ambiguous-corridor] standard relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") shares a 8px corridor with relationship id \"mastery_to_misconception\" (\"learner_mastery\" -> \"misconception_agent\") at [788, 615] -> [796, 615]",
+              "[composition/ambiguous-corridor] standard relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") shares a 8px corridor with relationship id \"mastery_to_sqlite\" (\"learner_mastery\" -> \"sqlite\") at [788, 615] -> [796, 615]",
+              "[composition/ambiguous-corridor] standard relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") shares a 43px corridor with relationship id \"pdf_to_extract\" (\"pdf_ingest\" -> \"text_extract\") at [780, 192] -> [780, 235]",
+              "[composition/ambiguous-corridor] standard relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") shares a 27px corridor with relationship id \"ppt_to_extract\" (\"ppt_ingest\" -> \"text_extract\") at [780, 208] -> [780, 235]",
+              "[composition/ambiguous-corridor] standard relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") shares a 14px corridor with relationship id \"verifier_to_tutor\" (\"source_verifier\" -> \"tutor_agent\") at [780, 382.5] -> [780, 396.5]",
+              "[composition/ambiguous-corridor] standard relationship id \"learner_to_recommendation\" (\"learner_mastery\" -> \"personal_recommendations\") shares a 37px corridor with relationship id \"video_to_segments\" (\"video_ingest\" -> \"text_extract\") at [780, 208] -> [780, 245]",
+              "[composition/ambiguous-corridor] standard relationship id \"mastery_to_misconception\" (\"learner_mastery\" -> \"misconception_agent\") shares a 24px corridor with relationship id \"mastery_to_sqlite\" (\"learner_mastery\" -> \"sqlite\") at [772, 615] -> [796, 615]",
+              "[composition/ambiguous-corridor] standard relationship id \"mastery_to_recovery\" (\"learner_mastery\" -> \"recovery_engine\") shares a 37px corridor with relationship id \"verifier_to_refusal\" (\"source_verifier\" -> \"refused_answer\") at [780, 747] -> [780, 784]",
+              "[composition/ambiguous-corridor] standard relationship id \"ollama_direct_response\" (\"ollama\" -> \"final_answer\") shares a 158px corridor with relationship id \"question_to_assessment\" (\"question_input\" -> \"assessment_agent\") at [1198, 127] -> [1198, 285]",
+              "[composition/ambiguous-corridor] standard relationship id \"pdf_to_extract\" (\"pdf_ingest\" -> \"text_extract\") shares a 27px corridor with relationship id \"ppt_to_extract\" (\"ppt_ingest\" -> \"text_extract\") at [780, 208] -> [780, 235]",
+              "[composition/ambiguous-corridor] standard relationship id \"pdf_to_extract\" (\"pdf_ingest\" -> \"text_extract\") shares a 27px corridor with relationship id \"video_to_segments\" (\"video_ingest\" -> \"text_extract\") at [780, 208] -> [780, 235]",
+              "[composition/ambiguous-corridor] standard relationship id \"ppt_to_extract\" (\"ppt_ingest\" -> \"text_extract\") shares a 186px corridor with relationship id \"video_to_segments\" (\"video_ingest\" -> \"text_extract\") at [586, 200] -> [772, 200]",
+              "[composition/ambiguous-corridor] standard relationship id \"retrieval_to_verifier\" (\"hybrid_retrieval\" -> \"source_verifier\") shares a 8px corridor with relationship id \"verifier_to_refusal\" (\"source_verifier\" -> \"refused_answer\") at [605, 491] -> [613, 491]"
+            ]
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "standard",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 41
+          },
+          "metrics": {
+            "properCrossings": 17,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 24,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": null,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 8.196869851729819,
+            "maxBends": 0,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 8,
+            "minInteriorSegmentPx": null,
+            "shortSegmentCount": 33,
+            "shortEndpointSegmentCount": 33,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": null,
+            "requestedTargetMet": null,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "supervisor_langgraph"
+            },
+            "minimumSourceTextPx": 10.7,
+            "minimumProjectedTextPx": 8.196869851729819,
+            "semanticTextCount": 30
+          },
+          "issues": [
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "point": [
+                1169,
+                491
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                780,
+                792
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "ollama_direct_response",
+                "from": "ollama",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "point": [
+                1169,
+                533
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "point": [
+                761,
+                328
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                780,
+                284
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "point": [
+                1182,
+                243
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                780,
+                801
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "citations_to_final",
+                "from": "verified_citations",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 4,
+                "artifactIndex": 5
+              },
+              "otherRelationship": {
+                "id": "question_to_assessment",
+                "from": "question_input",
+                "to": "assessment_agent",
+                "label": "",
+                "collectionIndex": 24,
+                "artifactIndex": 25
+              },
+              "point": [
+                1182,
+                293
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                679,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                679,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_image",
+                "from": "question_input",
+                "to": "image_ingest",
+                "label": "",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "point": [
+                679,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                578,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                578,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "point": [
+                487,
+                184
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "point": [
+                487,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "intake_video",
+                "from": "question_input",
+                "to": "video_ingest",
+                "label": "",
+                "collectionIndex": 11,
+                "artifactIndex": 12
+              },
+              "otherRelationship": {
+                "id": "question_to_planner",
+                "from": "question_input",
+                "to": "query_planner",
+                "label": "",
+                "collectionIndex": 25,
+                "artifactIndex": 26
+              },
+              "point": [
+                487,
+                161
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "point": [
+                597,
+                532
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_fallback",
+                "from": "assessment_agent",
+                "to": "assessment_fallback",
+                "label": "",
+                "collectionIndex": 0,
+                "artifactIndex": 1
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 85,
+              "from": [
+                687,
+                792
+              ],
+              "to": [
+                772,
+                792
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 159,
+              "from": [
+                788,
+                284
+              ],
+              "to": [
+                947,
+                284
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 147,
+              "from": [
+                780,
+                336
+              ],
+              "to": [
+                780,
+                483
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 307,
+              "from": [
+                780,
+                292
+              ],
+              "to": [
+                780,
+                599
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_mastery",
+                "from": "assessment_agent",
+                "to": "learner_mastery",
+                "label": "",
+                "collectionIndex": 1,
+                "artifactIndex": 2
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "assessment_to_verifier",
+                "from": "assessment_agent",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 1,
+              "overlapLength": 65.5,
+              "from": [
+                761,
+                407.5
+              ],
+              "to": [
+                761,
+                473
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "chunk_to_kb",
+                "from": "chunking",
+                "to": "session_kb",
+                "label": "",
+                "collectionIndex": 3,
+                "artifactIndex": 4
+              },
+              "otherRelationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3,
+              "overlapLength": 170,
+              "from": [
+                578,
+                623
+              ],
+              "to": [
+                578,
+                793
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "otherRelationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 147,
+              "from": [
+                780,
+                336
+              ],
+              "to": [
+                780,
+                483
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "image_to_ollama",
+                "from": "image_ingest",
+                "to": "ollama",
+                "label": "",
+                "collectionIndex": 6,
+                "artifactIndex": 7
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "intake_pdf",
+                "from": "question_input",
+                "to": "pdf_ingest",
+                "label": "",
+                "collectionIndex": 9,
+                "artifactIndex": 10
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1,
+              "overlapLength": 43,
+              "from": [
+                32,
+                192
+              ],
+              "to": [
+                32,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "intake_ppt",
+                "from": "question_input",
+                "to": "ppt_ingest",
+                "label": "",
+                "collectionIndex": 10,
+                "artifactIndex": 11
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 1,
+              "overlapLength": 27,
+              "from": [
+                578,
+                208
+              ],
+              "to": [
+                578,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                788,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "mastery_to_sqlite",
+                "from": "learner_mastery",
+                "to": "sqlite",
+                "label": "",
+                "collectionIndex": 16,
+                "artifactIndex": 17
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                788,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 43,
+              "from": [
+                780,
+                192
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "verifier_to_tutor",
+                "from": "source_verifier",
+                "to": "tutor_agent",
+                "label": "",
+                "collectionIndex": 35,
+                "artifactIndex": 36
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 14,
+              "from": [
+                780,
+                382.5
+              ],
+              "to": [
+                780,
+                396.5
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "learner_to_recommendation",
+                "from": "learner_mastery",
+                "to": "personal_recommendations",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3,
+              "overlapLength": 37,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                245
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "mastery_to_misconception",
+                "from": "learner_mastery",
+                "to": "misconception_agent",
+                "label": "",
+                "collectionIndex": 14,
+                "artifactIndex": 15
+              },
+              "otherRelationship": {
+                "id": "mastery_to_sqlite",
+                "from": "learner_mastery",
+                "to": "sqlite",
+                "label": "",
+                "collectionIndex": 16,
+                "artifactIndex": 17
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 24,
+              "from": [
+                772,
+                615
+              ],
+              "to": [
+                796,
+                615
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "mastery_to_recovery",
+                "from": "learner_mastery",
+                "to": "recovery_engine",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3,
+              "overlapLength": 37,
+              "from": [
+                780,
+                747
+              ],
+              "to": [
+                780,
+                784
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "ollama_direct_response",
+                "from": "ollama",
+                "to": "final_answer",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "otherRelationship": {
+                "id": "question_to_assessment",
+                "from": "question_input",
+                "to": "assessment_agent",
+                "label": "",
+                "collectionIndex": 24,
+                "artifactIndex": 25
+              },
+              "segmentIndex": 2,
+              "otherSegmentIndex": 2,
+              "overlapLength": 158,
+              "from": [
+                1198,
+                127
+              ],
+              "to": [
+                1198,
+                285
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "otherRelationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 2,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "pdf_to_extract",
+                "from": "pdf_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 20,
+                "artifactIndex": 21
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3,
+              "overlapLength": 27,
+              "from": [
+                780,
+                208
+              ],
+              "to": [
+                780,
+                235
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "ppt_to_extract",
+                "from": "ppt_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "otherRelationship": {
+                "id": "video_to_segments",
+                "from": "video_ingest",
+                "to": "text_extract",
+                "label": "",
+                "collectionIndex": 36,
+                "artifactIndex": 37
+              },
+              "segmentIndex": 1,
+              "otherSegmentIndex": 2,
+              "overlapLength": 186,
+              "from": [
+                586,
+                200
+              ],
+              "to": [
+                772,
+                200
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/ambiguous-corridor",
+              "relationship": {
+                "id": "retrieval_to_verifier",
+                "from": "hybrid_retrieval",
+                "to": "source_verifier",
+                "label": "",
+                "collectionIndex": 29,
+                "artifactIndex": 30
+              },
+              "otherRelationship": {
+                "id": "verifier_to_refusal",
+                "from": "source_verifier",
+                "to": "refused_answer",
+                "label": "",
+                "collectionIndex": 34,
+                "artifactIndex": 35
+              },
+              "segmentIndex": 0,
+              "otherSegmentIndex": 0,
+              "overlapLength": 8,
+              "from": [
+                605,
+                491
+              ],
+              "to": [
+                613,
+                491
+              ]
+            }
+          ]
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "0a69a9e9-edcc-4199-b256-2456ce5cb89b"
+      }
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 2142,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\Dhruva kumar J\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "browser-check",
+        "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "0a69a9e9-edcc-4199-b256-2456ce5cb89b",
+        "artifact": {
+          "path": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+          "sha256": "df18d779035734532bfd5bc9f3c70561d691eb8a252e6d8a743f7e638ded4ea3",
+          "bytes": 881504
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1278,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1135,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 115,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 115,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 115,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1478,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1270,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 129,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 129,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 129,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1744,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1856,
+              "diagramWidth": 1821,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1536,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 156,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 156,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 156,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1762,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1920,
+              "diagramWidth": 1821,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1536,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 156,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 156,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 156,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1278,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1135,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 115,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 115,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 115,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1478,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1270,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 129,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 129,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 129,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1744,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1856,
+              "diagramWidth": 1821,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1536,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 156,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 156,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 156,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1762,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1920,
+              "diagramWidth": 1821,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1536,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 156,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 156,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 156,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1278,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1135,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 115,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 115,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 115,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 115,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 58,
+                  "spaceAboveNodesPx": 45,
+                  "spaceBelowNodesPx": 12
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1478,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1270,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 129,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 129,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 129,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 129,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 65,
+                  "spaceAboveNodesPx": 51,
+                  "spaceBelowNodesPx": 14
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1744,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1856,
+              "diagramWidth": 1821,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1536,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 156,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 156,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 156,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1762,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "width-first",
+              "ok": true,
+              "readerWidth": 1920,
+              "diagramWidth": 1821,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1536,
+                "cardsPx": 0,
+                "viewBoxHeight": 1024
+              },
+              "viewBoxWidth": 1214,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 156,
+                  "nodeCount": 5,
+                  "nodeIds": [
+                    "student",
+                    "streamlit",
+                    "question_input",
+                    "personal_recommendations",
+                    "final_answer"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-1",
+                  "heightPx": 156,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "pdf_ingest",
+                    "ppt_ingest",
+                    "video_ingest",
+                    "image_ingest",
+                    "text_extract",
+                    "chunking"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "query_planner",
+                    "supervisor_langgraph",
+                    "tutor_agent",
+                    "assessment_agent"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "hybrid_retrieval",
+                    "source_verifier",
+                    "ollama",
+                    "verified_citations"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-4",
+                  "heightPx": 156,
+                  "nodeCount": 3,
+                  "nodeIds": [
+                    "session_kb",
+                    "sqlite",
+                    "learner_mastery"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                },
+                {
+                  "frameId": "lane-5",
+                  "heightPx": 156,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "index_error",
+                    "assessment_fallback",
+                    "refused_answer",
+                    "ollama_error"
+                  ],
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 62,
+                  "spaceBelowNodesPx": 17
+                }
+              ],
+              "minimumProjectedNodeTextPx": 10.7,
+              "minimumProjectedNonEdgeTextPx": 10.7,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "Supervisor / LangGraph",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "supervisor_langgraph"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3",
+          "receipt": "learnlens-end-to-end.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3\\learnlens-end-to-end.finalize.json",
+    "summaryReceipt": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3\\learnlens-end-to-end.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3\\learnlens-end-to-end.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-11-18T08:04:46.757Z",
+  "durationMs": 5248,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-18T07:51:13.897Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

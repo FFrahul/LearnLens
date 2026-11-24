@@ -1,0 +1,38 @@
+{
+  "app_start": true,
+  "offline_mode": true,
+  "demo_load": true,
+  "pdf_ready": true,
+  "ppt_ready": true,
+  "image_ready": true,
+  "video_ready": true,
+  "visual_cache": true,
+  "tutor_questions": [
+    {
+      "question": "What is hierarchical clustering?",
+      "status": "PASS"
+    },
+    {
+      "question": "What is the difference between agglomerative and divisive clustering?",
+      "status": "PASS"
+    },
+    {
+      "question": "How does single linkage calculate cluster distance?",
+      "status": "PASS"
+    },
+    {
+      "question": "How does complete linkage calculate cluster distance?",
+      "status": "PASS"
+    },
+    {
+      "question": "How should a dendrogram be read?",
+      "status": "PASS"
+    },
+    {
+      "question": "How is hierarchical clustering different from K-Means?",
+      "status": "PASS"
+    }
+  ],
+  "exceptions": [],
+  "result": "PASS"
+}

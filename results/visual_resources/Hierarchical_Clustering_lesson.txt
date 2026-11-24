@@ -1,0 +1,10 @@
+Lesson: Hierarchical Clustering
+
+Today we will learn Hierarchical Clustering.
+
+Key points:
+1. Distance between clusters
+2. Agglomerative merging
+3. Dendrogram interpretation
+
+Pause and check your understanding before moving on.

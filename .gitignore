@@ -26,6 +26,7 @@ Thumbs.db
 
 # Local learner data (personal progress; recreated automatically)
 learner_state.json
+learnlens.db
 
 # Local cache of Gemini knowledge tags for your own course material
 # (recreated automatically, may contain course content)
@@ -38,3 +39,4 @@ evaluation_results.json
 evaluation_results.csv
 
 # evaluation_testset.json is the team-built test set: keep it committed.
+samples/videos/*.mp4

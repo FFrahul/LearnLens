@@ -4,9 +4,6 @@
 # UI (tested 1.64.0; uses width="stretch", st.toggle, ProgressColumn)
 streamlit>=1.50,<2
 
-# Gemini SDK: generation, embeddings, Files API (tested 2.25.0)
-google-genai>=1.20
-
 # PDF text + embedded figure extraction (tested 1.28.2; uses "import pymupdf")
 pymupdf>=1.24
 
@@ -15,14 +12,26 @@ python-pptx>=1.0
 
 numpy>=1.26
 python-dotenv>=1.0
+faster-whisper>=1.1,<2
+torch>=2.15,<3
+Pillow>=11,<13
+pytesseract>=0.3.13,<0.4
+cairosvg>=2.7,<3
 
-# RAGAS evaluation. Pinned: the app uses the 0.4.x APIs
-# (ragas.metrics.collections, llm_factory with an AsyncOpenAI client).
+# Optional TensorFlow/Keras experiments (not imported during normal startup):
+# pip install tensorflow>=2.16,<3
+
+# Local RAGAS evaluation. Pinned: the app uses the 0.4.x APIs
+# (ragas.metrics.collections, llm_factory with Ollama's local endpoint).
 ragas==0.4.3
 
-# OpenAI-compatible client used by RAGAS against Gemini's
-# OpenAI-compatible endpoint (no OpenAI account needed; tested 1.109.1)
+# OpenAI-compatible client used only against the loopback Ollama endpoint.
 openai>=1.40,<2
 
 # Pinned for compatibility with ragas 0.4.3's import chain.
 langchain-community==0.3.31
+
+# Optional Gemini SDK used only when the sidebar AI Engine is set to Auto/Online.
+google-genai>=1.0,<2
+reportlab>=5.1,<6
+pyttsx3>=2.99,<3

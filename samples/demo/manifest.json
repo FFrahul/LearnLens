@@ -1,0 +1,31 @@
+{
+  "status": "DEMO_BUNDLE",
+  "topic": "Hierarchical Clustering",
+  "license": "Synthetic or project-owned demo material",
+  "files": [
+    {
+      "filename": "hierarchical_clustering.pdf",
+      "type": "PDF",
+      "status": "SYNTHETIC",
+      "expected_pages": 2
+    },
+    {
+      "filename": "hierarchical_clustering.pptx",
+      "type": "PPTX",
+      "status": "SYNTHETIC",
+      "expected_slides": 8
+    },
+    {
+      "filename": "hierarchical_clustering_dendrogram.png",
+      "type": "IMAGE",
+      "status": "SYNTHETIC",
+      "purpose": "Dendrogram and diagram QA"
+    },
+    {
+      "filename": "hierarchical_clustering.mp4",
+      "type": "VIDEO",
+      "status": "PROJECT_DEMO_SAMPLE",
+      "purpose": "Timestamped lecture transcript"
+    }
+  ]
+}

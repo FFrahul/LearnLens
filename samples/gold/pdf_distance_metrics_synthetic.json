@@ -1,0 +1,116 @@
+{
+  "source": "distance_metrics_synthetic.pdf",
+  "topic": "Minkowski, Euclidean and Manhattan Distance",
+  "questions": [
+    {
+      "id": "distance_metrics_synthetic_01",
+      "question": "What is key fact 1 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 1",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_02",
+      "question": "What is key fact 2 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 2",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_03",
+      "question": "What is key fact 3 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 3",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_04",
+      "question": "What is key fact 4 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 4",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_05",
+      "question": "What is key fact 5 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 5",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_06",
+      "question": "What is key fact 6 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 6",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_07",
+      "question": "What is key fact 7 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 7",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_08",
+      "question": "What is key fact 8 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 2",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 8",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_09",
+      "question": "What is key fact 9 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 2",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 9",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "distance_metrics_synthetic_10",
+      "question": "What is key fact 10 about Minkowski, Euclidean and Manhattan Distance?",
+      "expected_source": "Page 2",
+      "expected_key_facts": [
+        "Minkowski, Euclidean and Manhattan Distance key fact 10",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "easy"
+    }
+  ]
+}

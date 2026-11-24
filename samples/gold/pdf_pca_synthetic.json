@@ -1,0 +1,116 @@
+{
+  "source": "pca_synthetic.pdf",
+  "topic": "Principal Component Analysis",
+  "questions": [
+    {
+      "id": "pca_synthetic_01",
+      "question": "What is key fact 1 about Principal Component Analysis?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 1",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_02",
+      "question": "What is key fact 2 about Principal Component Analysis?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 2",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_03",
+      "question": "What is key fact 3 about Principal Component Analysis?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 3",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_04",
+      "question": "What is key fact 4 about Principal Component Analysis?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 4",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_05",
+      "question": "What is key fact 5 about Principal Component Analysis?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 5",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_06",
+      "question": "What is key fact 6 about Principal Component Analysis?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 6",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_07",
+      "question": "What is key fact 7 about Principal Component Analysis?",
+      "expected_source": "Page 1",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 7",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_08",
+      "question": "What is key fact 8 about Principal Component Analysis?",
+      "expected_source": "Page 2",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 8",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_09",
+      "question": "What is key fact 9 about Principal Component Analysis?",
+      "expected_source": "Page 2",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 9",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "pca_synthetic_10",
+      "question": "What is key fact 10 about Principal Component Analysis?",
+      "expected_source": "Page 2",
+      "expected_key_facts": [
+        "Principal Component Analysis key fact 10",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "medium"
+    }
+  ]
+}

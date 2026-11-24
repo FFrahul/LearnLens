@@ -1,0 +1,116 @@
+{
+  "source": "transformer_diagram_synthetic.png",
+  "topic": "Transformer block diagram",
+  "questions": [
+    {
+      "id": "transformer_diagram_synthetic_01",
+      "question": "What is key fact 1 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 1",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_02",
+      "question": "What is key fact 2 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 2",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_03",
+      "question": "What is key fact 3 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 3",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_04",
+      "question": "What is key fact 4 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 4",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_05",
+      "question": "What is key fact 5 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 5",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_06",
+      "question": "What is key fact 6 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 6",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_07",
+      "question": "What is key fact 7 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 7",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_08",
+      "question": "What is key fact 8 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 8",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_09",
+      "question": "What is key fact 9 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 9",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "transformer_diagram_synthetic_10",
+      "question": "What is key fact 10 about Transformer block diagram?",
+      "expected_source": "Whole image",
+      "expected_key_facts": [
+        "Transformer block diagram key fact 10",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    }
+  ]
+}

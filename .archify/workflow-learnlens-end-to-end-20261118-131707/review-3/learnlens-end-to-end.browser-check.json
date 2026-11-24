@@ -1,0 +1,1754 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "browser-check",
+  "evidenceKind": "automated-browser",
+  "status": "pass",
+  "visualReview": "not-requested",
+  "provenance": "current",
+  "deliveryReceiptId": "0a69a9e9-edcc-4199-b256-2456ce5cb89b",
+  "artifact": {
+    "path": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+    "sha256": "df18d779035734532bfd5bc9f3c70561d691eb8a252e6d8a743f7e638ded4ea3",
+    "bytes": 881504
+  },
+  "state": {
+    "detail": "read",
+    "motion": "still"
+  },
+  "chrome": {
+    "status": "available",
+    "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "diagnostics": [],
+  "containment": {
+    "status": "pass",
+    "policy": "fit-or-reader-declared-readable-vertical-scroll",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1278,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 1135,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 115,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 115,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 115,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 1478,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1270,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 129,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 129,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 129,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 1744,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1821,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1536,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 156,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 1762,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1821,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 1536,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 156,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "themeStates": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      }
+    ]
+  },
+  "readability": {
+    "status": "pass",
+    "minimumProjectedNodeTextPx": 6,
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1278,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 1135,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 115,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 115,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 115,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 1478,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1270,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 129,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 129,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 129,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 1744,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1821,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1536,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 156,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 1762,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1821,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 1536,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 156,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "viewerChrome": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1278,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 1135,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 115,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 115,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 115,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 115,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 58,
+            "spaceAboveNodesPx": 45,
+            "spaceBelowNodesPx": 12
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 1478,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1270,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 129,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 129,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 129,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 129,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 65,
+            "spaceAboveNodesPx": 51,
+            "spaceBelowNodesPx": 14
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 1744,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1821,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1536,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 156,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 1762,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1821,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 1536,
+          "cardsPx": 0,
+          "viewBoxHeight": 1024
+        },
+        "viewBoxWidth": 1214,
+        "workflowLanes": [
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "personal_recommendations",
+              "final_answer"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 6,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "video_ingest",
+              "image_ingest",
+              "text_extract",
+              "chunking"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "tutor_agent",
+              "assessment_agent"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 156,
+            "nodeCount": 3,
+            "nodeIds": [
+              "session_kb",
+              "sqlite",
+              "learner_mastery"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 156,
+            "nodeCount": 4,
+            "nodeIds": [
+              "index_error",
+              "assessment_fallback",
+              "refused_answer",
+              "ollama_error"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 10.7,
+        "minimumProjectedNonEdgeTextPx": 10.7,
+        "minimumProjectedEdgeTextPx": null,
+        "minimumProjectedNodeText": "Supervisor / LangGraph",
+        "minimumProjectedNodeTextDetail": "primary",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "supervisor_langgraph"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "captures": {
+    "status": "not-requested",
+    "screenshots": [],
+    "contactSheet": null
+  },
+  "sidecars": {
+    "directory": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\review-3",
+    "receipt": "learnlens-end-to-end.browser-check.json",
+    "files": []
+  }
+}

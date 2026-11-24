@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "0a69a9e9-edcc-4199-b256-2456ce5cb89b",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\candidate.json",
+  "output": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+  "specification": {
+    "sha256": "7a7cf6e9ab85212a166cca4d8aedee23e5e9ee47e00490d3b3e84f2f6b426b05",
+    "bytes": 27292
+  },
+  "artifact": {
+    "sha256": "df18d779035734532bfd5bc9f3c70561d691eb8a252e6d8a743f7e638ded4ea3",
+    "bytes": 881504
+  }
+}

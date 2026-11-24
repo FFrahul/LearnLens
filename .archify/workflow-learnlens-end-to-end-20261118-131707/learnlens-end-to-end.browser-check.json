@@ -1,0 +1,2454 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "browser-check",
+  "evidenceKind": "automated-browser",
+  "status": "fail",
+  "visualReview": "not-requested",
+  "provenance": "current",
+  "deliveryReceiptId": "25d2a726-d8dc-4a43-9f73-6df4d4e94705",
+  "artifact": {
+    "path": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+    "sha256": "cd4dcb49566413034d0f87ae7e5f3d130f435b1d78c3b0b225baa108ade7d8a5",
+    "bytes": 913979
+  },
+  "state": {
+    "detail": "read",
+    "motion": "still"
+  },
+  "chrome": {
+    "status": "available",
+    "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/viewport-overflow",
+      "severity": "error",
+      "message": "The rendered artifact overflows the 1440x900 light viewport.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "theme": "light"
+        }
+      },
+      "evidence": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 929,
+        "overflowX": false,
+        "overflowY": true,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 787,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "pageCompositionMeasurement": "CSS pixels at this viewport; body padding, header, diagram chrome, SVG and cards stack vertically and sum to scrollHeight",
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 134,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 113,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 132,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 132,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 131,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 50,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 50,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "measurement": "CSS pixels; rendered node boxes geometrically contained in each lane frame; spaces include headers and routing, not guaranteed removable space"
+      },
+      "supportedFixes": [
+        "the page is 29px too tall (12px body padding + 52px header + 78px diagram chrome + 787px SVG + 0px cards = 929px against 900px); the Reader already narrowed the stage to its 1346px minimum, so the SVG height only follows meta.viewBox: keep every node and relationship and reduce the viewBox height to at most 1606 (from 1668) by tightening vertical gaps and empty rows",
+        "run validate workflow <source.json> --layout-json and compare the tallest rendered lane frames with source lanes, col and yOffset; frame IDs are rendered indices, not source lane IDs",
+        "where ownership and explicit geometry permit, distribute stacked steps across logical columns and meaningful lanes before increasing yOffset; preserve nodes, branches, labels and hard pins",
+        "read references/authoring-contract.md#workflow-viewport-repair, then validate and deliver the changed source before rerunning browser-check on the new artifact; this is inspection guidance, not a verified coordinate fix"
+      ]
+    },
+    {
+      "code": "viewer/viewport-overflow",
+      "severity": "error",
+      "message": "The rendered artifact overflows the 1600x1000 light viewport.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 1600,
+          "height": 1000,
+          "theme": "light"
+        }
+      },
+      "evidence": {
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 1089,
+        "overflowX": false,
+        "overflowY": true,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 880,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "pageCompositionMeasurement": "CSS pixels at this viewport; body padding, header, diagram chrome, SVG and cards stack vertically and sum to scrollHeight",
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 150,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 127,
+            "spaceAboveNodesPx": 21,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 147,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 147,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 147,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 56,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 56,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "measurement": "CSS pixels; rendered node boxes geometrically contained in each lane frame; spaces include headers and routing, not guaranteed removable space"
+      },
+      "supportedFixes": [
+        "the page is 89px too tall (64px body padding + 60px header + 84px diagram chrome + 880px SVG + 0px cards = 1089px against 1000px); the Reader already narrowed the stage to its 1506px minimum, so the SVG height only follows meta.viewBox: keep every node and relationship and reduce the viewBox height to at most 1499 (from 1668) by tightening vertical gaps and empty rows",
+        "run validate workflow <source.json> --layout-json and compare the tallest rendered lane frames with source lanes, col and yOffset; frame IDs are rendered indices, not source lane IDs",
+        "where ownership and explicit geometry permit, distribute stacked steps across logical columns and meaningful lanes before increasing yOffset; preserve nodes, branches, labels and hard pins",
+        "read references/authoring-contract.md#workflow-viewport-repair, then validate and deliver the changed source before rerunning browser-check on the new artifact; this is inspection guidance, not a verified coordinate fix"
+      ]
+    },
+    {
+      "code": "viewer/viewport-overflow",
+      "severity": "error",
+      "message": "The rendered artifact overflows the 1920x1080 light viewport.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "theme": "light"
+        }
+      },
+      "evidence": {
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 1276,
+        "overflowX": false,
+        "overflowY": true,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1067,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "pageCompositionMeasurement": "CSS pixels at this viewport; body padding, header, diagram chrome, SVG and cards stack vertically and sum to scrollHeight",
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 182,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 154,
+            "spaceAboveNodesPx": 25,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 179,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 179,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 178,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 68,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 68,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          }
+        ],
+        "measurement": "CSS pixels; rendered node boxes geometrically contained in each lane frame; spaces include headers and routing, not guaranteed removable space"
+      },
+      "supportedFixes": [
+        "the page is 196px too tall (64px body padding + 60px header + 84px diagram chrome + 1067px SVG + 0px cards = 1276px against 1080px); the Reader already narrowed the stage to its 1826px minimum, so the SVG height only follows meta.viewBox: keep every node and relationship and reduce the viewBox height to at most 1361 (from 1668) by tightening vertical gaps and empty rows",
+        "run validate workflow <source.json> --layout-json and compare the tallest rendered lane frames with source lanes, col and yOffset; frame IDs are rendered indices, not source lane IDs",
+        "where ownership and explicit geometry permit, distribute stacked steps across logical columns and meaningful lanes before increasing yOffset; preserve nodes, branches, labels and hard pins",
+        "read references/authoring-contract.md#workflow-viewport-repair, then validate and deliver the changed source before rerunning browser-check on the new artifact; this is inspection guidance, not a verified coordinate fix"
+      ]
+    },
+    {
+      "code": "viewer/viewport-overflow",
+      "severity": "error",
+      "message": "The rendered artifact overflows the 1440x900 dark viewport.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "theme": "dark"
+        }
+      },
+      "evidence": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 929,
+        "overflowX": false,
+        "overflowY": true,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 787,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "pageCompositionMeasurement": "CSS pixels at this viewport; body padding, header, diagram chrome, SVG and cards stack vertically and sum to scrollHeight",
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 134,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 113,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 132,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 132,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 131,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 50,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 50,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "measurement": "CSS pixels; rendered node boxes geometrically contained in each lane frame; spaces include headers and routing, not guaranteed removable space"
+      },
+      "supportedFixes": [
+        "the page is 29px too tall (12px body padding + 52px header + 78px diagram chrome + 787px SVG + 0px cards = 929px against 900px); the Reader already narrowed the stage to its 1346px minimum, so the SVG height only follows meta.viewBox: keep every node and relationship and reduce the viewBox height to at most 1606 (from 1668) by tightening vertical gaps and empty rows",
+        "run validate workflow <source.json> --layout-json and compare the tallest rendered lane frames with source lanes, col and yOffset; frame IDs are rendered indices, not source lane IDs",
+        "where ownership and explicit geometry permit, distribute stacked steps across logical columns and meaningful lanes before increasing yOffset; preserve nodes, branches, labels and hard pins",
+        "read references/authoring-contract.md#workflow-viewport-repair, then validate and deliver the changed source before rerunning browser-check on the new artifact; this is inspection guidance, not a verified coordinate fix"
+      ]
+    },
+    {
+      "code": "viewer/projected-text-readability",
+      "severity": "error",
+      "message": "Projected context text is below the readability floor at 1440x900.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "theme": "light"
+        }
+      },
+      "evidence": {
+        "text": "Text boxes + tables + picture metadata",
+        "detail": "context",
+        "owner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumProjectedNodeTextPx": 2.9240364400840924,
+        "minimumRequiredNodeTextPx": 6
+      },
+      "supportedFixes": [
+        "increase projected node text to at least 6px at 1440x900, then rerun browser-check"
+      ]
+    },
+    {
+      "code": "viewer/projected-text-readability",
+      "severity": "error",
+      "message": "Projected context text is below the readability floor at 1600x1000.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 1600,
+          "height": 1000,
+          "theme": "light"
+        }
+      },
+      "evidence": {
+        "text": "Text boxes + tables + picture metadata",
+        "detail": "context",
+        "owner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumProjectedNodeTextPx": 3.271618780658725,
+        "minimumRequiredNodeTextPx": 6
+      },
+      "supportedFixes": [
+        "increase projected node text to at least 6px at 1600x1000, then rerun browser-check"
+      ]
+    },
+    {
+      "code": "viewer/projected-text-readability",
+      "severity": "error",
+      "message": "Projected context text is below the readability floor at 1920x1080.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "theme": "light"
+        }
+      },
+      "evidence": {
+        "text": "Text boxes + tables + picture metadata",
+        "detail": "context",
+        "owner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumProjectedNodeTextPx": 3.966783461807989,
+        "minimumRequiredNodeTextPx": 6
+      },
+      "supportedFixes": [
+        "increase projected node text to at least 6px at 1920x1080, then rerun browser-check"
+      ]
+    },
+    {
+      "code": "viewer/projected-text-readability",
+      "severity": "error",
+      "message": "Projected context text is below the readability floor at 2048x1320.",
+      "subject": {
+        "artifact": "C:\\Users\\Dhruva kumar J\\OneDrive\\Desktop\\AgenticAi(LearnSphere)\\.archify\\workflow-learnlens-end-to-end-20261118-131707\\learnlens-end-to-end.html",
+        "viewport": {
+          "width": 2048,
+          "height": 1320,
+          "theme": "light"
+        }
+      },
+      "evidence": {
+        "text": "Text boxes + tables + picture metadata",
+        "detail": "context",
+        "owner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumProjectedNodeTextPx": 4.062368605466013,
+        "minimumRequiredNodeTextPx": 6
+      },
+      "supportedFixes": [
+        "increase projected node text to at least 6px at 2048x1320, then rerun browser-check"
+      ]
+    }
+  ],
+  "containment": {
+    "status": "fail",
+    "policy": "fit-or-reader-declared-readable-vertical-scroll",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 929,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 787,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 134,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 113,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 132,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 132,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 131,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 50,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 50,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "minimumProjectedNodeTextPx": 2.9240364400840924,
+        "minimumProjectedNonEdgeTextPx": 2.9240364400840924,
+        "minimumProjectedEdgeTextPx": 3.7729502452697967,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 1089,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 880,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 150,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 127,
+            "spaceAboveNodesPx": 21,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 147,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 147,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 147,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 56,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 56,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "minimumProjectedNodeTextPx": 3.271618780658725,
+        "minimumProjectedNonEdgeTextPx": 3.271618780658725,
+        "minimumProjectedEdgeTextPx": 4.221443587946742,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 1276,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1856,
+        "diagramWidth": 1826,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1067,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 182,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 154,
+            "spaceAboveNodesPx": 25,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 179,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 179,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 178,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 68,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 68,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          }
+        ],
+        "minimumProjectedNodeTextPx": 3.966783461807989,
+        "minimumProjectedNonEdgeTextPx": 3.966783461807989,
+        "minimumProjectedEdgeTextPx": 5.118430273300631,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 1320,
+        "overflowX": false,
+        "overflowY": false,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "contained",
+        "readerLayout": "adaptive",
+        "readerOverflow": null,
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1870,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 1093,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 186,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 157,
+            "spaceAboveNodesPx": 26,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 183,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 183,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 182,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 69,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 45,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 69,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 45,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          }
+        ],
+        "minimumProjectedNodeTextPx": 4.062368605466013,
+        "minimumProjectedNonEdgeTextPx": 4.062368605466013,
+        "minimumProjectedEdgeTextPx": 5.241765942536791,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "themeStates": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      }
+    ]
+  },
+  "readability": {
+    "status": "fail",
+    "minimumProjectedNodeTextPx": 6,
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 929,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 787,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 134,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 113,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 132,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 132,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 131,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 50,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 50,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "minimumProjectedNodeTextPx": 2.9240364400840924,
+        "minimumProjectedNonEdgeTextPx": 2.9240364400840924,
+        "minimumProjectedEdgeTextPx": 3.7729502452697967,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 1089,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 880,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 150,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 127,
+            "spaceAboveNodesPx": 21,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 147,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 147,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 147,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 56,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 56,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "minimumProjectedNodeTextPx": 3.271618780658725,
+        "minimumProjectedNonEdgeTextPx": 3.271618780658725,
+        "minimumProjectedEdgeTextPx": 4.221443587946742,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 1276,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1856,
+        "diagramWidth": 1826,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1067,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 182,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 154,
+            "spaceAboveNodesPx": 25,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 179,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 179,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 178,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 68,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 68,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          }
+        ],
+        "minimumProjectedNodeTextPx": 3.966783461807989,
+        "minimumProjectedNonEdgeTextPx": 3.966783461807989,
+        "minimumProjectedEdgeTextPx": 5.118430273300631,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 1320,
+        "overflowX": false,
+        "overflowY": false,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "contained",
+        "readerLayout": "adaptive",
+        "readerOverflow": null,
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1870,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 1093,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 186,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 157,
+            "spaceAboveNodesPx": 26,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 183,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 183,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 182,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 69,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 45,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 69,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 45,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          }
+        ],
+        "minimumProjectedNodeTextPx": 4.062368605466013,
+        "minimumProjectedNonEdgeTextPx": 4.062368605466013,
+        "minimumProjectedEdgeTextPx": 5.241765942536791,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "viewerChrome": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 929,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 787,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 134,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 113,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 132,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 132,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 131,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 73,
+            "spaceAboveNodesPx": 57,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 50,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 50,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 32,
+            "spaceAboveNodesPx": 16,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "minimumProjectedNodeTextPx": 2.9240364400840924,
+        "minimumProjectedNonEdgeTextPx": 2.9240364400840924,
+        "minimumProjectedEdgeTextPx": 3.7729502452697967,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 1089,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 880,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 150,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 127,
+            "spaceAboveNodesPx": 21,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 147,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 147,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 147,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 81,
+            "spaceAboveNodesPx": 63,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 56,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 56,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 36,
+            "spaceAboveNodesPx": 18,
+            "spaceBelowNodesPx": 2
+          }
+        ],
+        "minimumProjectedNodeTextPx": 3.271618780658725,
+        "minimumProjectedNonEdgeTextPx": 3.271618780658725,
+        "minimumProjectedEdgeTextPx": 4.221443587946742,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 1276,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "unexpected-overflow",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": false,
+        "readerWidth": 1856,
+        "diagramWidth": 1826,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 1067,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 182,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 154,
+            "spaceAboveNodesPx": 25,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 179,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 179,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 178,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 99,
+            "spaceAboveNodesPx": 77,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 68,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 68,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 44,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          }
+        ],
+        "minimumProjectedNodeTextPx": 3.966783461807989,
+        "minimumProjectedNonEdgeTextPx": 3.966783461807989,
+        "minimumProjectedEdgeTextPx": 5.118430273300631,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 1320,
+        "overflowX": false,
+        "overflowY": false,
+        "verticalScrollAccepted": false,
+        "overflowDisposition": "contained",
+        "readerLayout": "adaptive",
+        "readerOverflow": null,
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1870,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 1093,
+          "cardsPx": 0,
+          "viewBoxHeight": 1668
+        },
+        "viewBoxWidth": 2854,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 186,
+            "nodeCount": 7,
+            "nodeIds": [
+              "query_planner",
+              "supervisor_langgraph",
+              "assessment_agent",
+              "tutor_agent",
+              "knowledge_graph",
+              "misconception_agent",
+              "study_planner"
+            ],
+            "nodeSpanPx": 157,
+            "spaceAboveNodesPx": 26,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 183,
+            "nodeCount": 8,
+            "nodeIds": [
+              "pdf_ingest",
+              "ppt_ingest",
+              "image_ingest",
+              "video_ingest",
+              "text_extract",
+              "chunking",
+              "feature_embeddings",
+              "session_kb"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-5",
+            "heightPx": 183,
+            "nodeCount": 4,
+            "nodeIds": [
+              "assessment_fallback",
+              "index_error",
+              "ollama_error",
+              "refused_answer"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 182,
+            "nodeCount": 5,
+            "nodeIds": [
+              "student",
+              "streamlit",
+              "question_input",
+              "final_answer",
+              "personal_recommendations"
+            ],
+            "nodeSpanPx": 101,
+            "spaceAboveNodesPx": 79,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 69,
+            "nodeCount": 4,
+            "nodeIds": [
+              "hybrid_retrieval",
+              "source_verifier",
+              "ollama",
+              "verified_citations"
+            ],
+            "nodeSpanPx": 45,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          },
+          {
+            "frameId": "lane-4",
+            "heightPx": 69,
+            "nodeCount": 3,
+            "nodeIds": [
+              "sqlite",
+              "learner_mastery",
+              "recovery_engine"
+            ],
+            "nodeSpanPx": 45,
+            "spaceAboveNodesPx": 22,
+            "spaceBelowNodesPx": 3
+          }
+        ],
+        "minimumProjectedNodeTextPx": 4.062368605466013,
+        "minimumProjectedNonEdgeTextPx": 4.062368605466013,
+        "minimumProjectedEdgeTextPx": 5.241765942536791,
+        "minimumProjectedNodeText": "Text boxes + tables + picture metadata",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "ppt_ingest"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": false,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "captures": {
+    "status": "not-requested",
+    "screenshots": [],
+    "contactSheet": null
+  },
+  "sidecars": {
+    "receipt": "learnlens-end-to-end.browser-check.json",
+    "files": []
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "source": "rag_langchain_synthetic.pptx",
+  "topic": "RAG and LangChain",
+  "questions": [
+    {
+      "id": "rag_langchain_synthetic_01",
+      "question": "What is key fact 1 about RAG and LangChain?",
+      "expected_source": "Slide 1",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 1",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_02",
+      "question": "What is key fact 2 about RAG and LangChain?",
+      "expected_source": "Slide 2",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 2",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_03",
+      "question": "What is key fact 3 about RAG and LangChain?",
+      "expected_source": "Slide 3",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 3",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_04",
+      "question": "What is key fact 4 about RAG and LangChain?",
+      "expected_source": "Slide 4",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 4",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_05",
+      "question": "What is key fact 5 about RAG and LangChain?",
+      "expected_source": "Slide 5",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 5",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_06",
+      "question": "What is key fact 6 about RAG and LangChain?",
+      "expected_source": "Slide 6",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 6",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_07",
+      "question": "What is key fact 7 about RAG and LangChain?",
+      "expected_source": "Slide 7",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 7",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_08",
+      "question": "What is key fact 8 about RAG and LangChain?",
+      "expected_source": "Slide 8",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 8",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_09",
+      "question": "What is key fact 9 about RAG and LangChain?",
+      "expected_source": "Slide 1",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 9",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_langchain_synthetic_10",
+      "question": "What is key fact 10 about RAG and LangChain?",
+      "expected_source": "Slide 2",
+      "expected_key_facts": [
+        "RAG and LangChain key fact 10",
+        "Definition",
+        "Worked example"
+      ],
+      "difficulty": "hard"
+    }
+  ]
+}

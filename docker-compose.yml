@@ -1,0 +1,15 @@
+services:
+  learnlens:
+    build: .
+    ports:
+      - "${LEARNLENS_PORT:-8501}:8501"
+    environment:
+      OLLAMA_HOST: http://host.docker.internal:11434
+      LEARNLENS_OLLAMA_MODEL: ${LEARNLENS_OLLAMA_MODEL:-llama3.2:1b}
+      LEARNLENS_OLLAMA_VISION_MODEL: ${LEARNLENS_OLLAMA_VISION_MODEL:-llava:7b}
+      LEARNLENS_WHISPER_MODEL: ${LEARNLENS_WHISPER_MODEL:-tiny}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      LEARNLENS_GEMINI_MODEL: ${LEARNLENS_GEMINI_MODEL:-gemini-2.5-flash}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

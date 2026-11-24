@@ -1,0 +1,671 @@
+{
+    "schema_version":  2,
+    "diagram_type":  "workflow",
+    "meta":  {
+                 "title":  "LearnLens AI 2.0 - End-to-End Workflow",
+                 "locale":  "en",
+                 "output":  ".archify/workflow-learnlens-end-to-end-20261118-131707/learnlens-end-to-end.html",
+                 "animation":  "trace",
+                 "quality_profile":  "standard"
+             },
+    "lanes":  [
+                  {
+                      "id":  "student_ui",
+                      "label":  "Student \u0026 Streamlit UI"
+                  },
+                  {
+                      "id":  "ingestion",
+                      "label":  "Document, Media \u0026 Text Ingestion"
+                  },
+                  {
+                      "id":  "orchestration",
+                      "label":  "Routing \u0026 Learning Agents"
+                  },
+                  {
+                      "id":  "retrieval",
+                      "label":  "Retrieval, Generation \u0026 Verification"
+                  },
+                  {
+                      "id":  "persistence",
+                      "label":  "Learner State \u0026 Personalization"
+                  },
+                  {
+                      "id":  "exceptions",
+                      "label":  "Errors, Refusal \u0026 Fallback",
+                      "variant":  "exception"
+                  },
+                  {
+                      "id":  "learning_agents",
+                      "label":  "Learning Agents \u0026 Recovery"
+                  }
+              ],
+    "phases":  [
+                   {
+                       "id":  "intake",
+                       "label":  "Student Intake",
+                       "fromCol":  0,
+                       "toCol":  0
+                   },
+                   {
+                       "id":  "processing",
+                       "label":  "Ingest + Index",
+                       "fromCol":  1,
+                       "toCol":  2,
+                       "variant":  "emphasis"
+                   },
+                   {
+                       "id":  "reasoning",
+                       "label":  "Route + Retrieve",
+                       "fromCol":  3,
+                       "toCol":  4,
+                       "variant":  "dashed"
+                   },
+                   {
+                       "id":  "response",
+                       "label":  "Verify + Personalize",
+                       "fromCol":  5,
+                       "toCol":  5
+                   }
+               ],
+    "groups":  [
+                   {
+                       "id":  "document_paths",
+                       "label":  "Implemented ingestion paths",
+                       "lane":  "ingestion",
+                       "fromCol":  0,
+                       "toCol":  3,
+                       "variant":  "dashed"
+                   },
+                   {
+                       "id":  "agent_paths",
+                       "label":  "Existing offline orchestration",
+                       "lane":  "orchestration",
+                       "fromCol":  2,
+                       "toCol":  5,
+                       "variant":  "emphasis"
+                   },
+                   {
+                       "id":  "fallback_paths",
+                       "label":  "Local fallback and recovery",
+                       "lane":  "exceptions",
+                       "fromCol":  3,
+                       "toCol":  5,
+                       "variant":  "security"
+                   },
+                   {
+                       "id":  "learning_paths",
+                       "label":  "Learner model and recovery",
+                       "lane":  "learning_agents",
+                       "fromCol":  2,
+                       "toCol":  5,
+                       "variant":  "dashed"
+                   }
+               ],
+    "mainPath":  [
+                     "student",
+                     "streamlit",
+                     "question_input",
+                     "query_planner",
+                     "hybrid_retrieval",
+                     "source_verifier",
+                     "tutor_agent",
+                     "ollama",
+                     "final_answer"
+                 ],
+    "semanticChecks":  {
+                           "allowedRoots":  [
+                                                "student",
+                                                "pdf_ingest",
+                                                "ppt_ingest",
+                                                "video_ingest",
+                                                "image_ingest"
+                                            ],
+                           "allowedTerminals":  [
+                                                    "final_answer",
+                                                    "refused_answer",
+                                                    "index_error",
+                                                    "ollama_error",
+                                                    "supervisor_langgraph",
+                                                    "knowledge_graph",
+                                                    "misconception_agent",
+                                                    "study_planner",
+                                                    "assessment_fallback"
+                                                ],
+                           "requiredEdges":  [
+                                                 {
+                                                     "from":  "question_input",
+                                                     "to":  "query_planner"
+                                                 },
+                                                 {
+                                                     "from":  "hybrid_retrieval",
+                                                     "to":  "source_verifier"
+                                                 },
+                                                 {
+                                                     "from":  "source_verifier",
+                                                     "to":  "tutor_agent"
+                                                 },
+                                                 {
+                                                     "from":  "tutor_agent",
+                                                     "to":  "ollama"
+                                                 },
+                                                 {
+                                                     "from":  "ollama",
+                                                     "to":  "final_answer"
+                                                 }
+                                             ]
+                       },
+    "nodes":  [
+                  {
+                      "id":  "student",
+                      "lane":  "student_ui",
+                      "col":  0,
+                      "type":  "external",
+                      "label":  "Student",
+                      "icon":  "person",
+                      "width":  132
+                  },
+                  {
+                      "id":  "streamlit",
+                      "lane":  "student_ui",
+                      "col":  1,
+                      "type":  "frontend",
+                      "label":  "Streamlit App",
+                      "icon":  "frontend",
+                      "width":  132
+                  },
+                  {
+                      "id":  "question_input",
+                      "lane":  "student_ui",
+                      "col":  2,
+                      "type":  "frontend",
+                      "label":  "Question / Upload",
+                      "width":  150
+                  },
+                  {
+                      "id":  "pdf_ingest",
+                      "lane":  "ingestion",
+                      "col":  0,
+                      "type":  "backend",
+                      "label":  "PDF Ingestion",
+                      "width":  150
+                  },
+                  {
+                      "id":  "ppt_ingest",
+                      "lane":  "ingestion",
+                      "col":  1,
+                      "type":  "backend",
+                      "label":  "PPT Ingestion",
+                      "width":  150
+                  },
+                  {
+                      "id":  "video_ingest",
+                      "lane":  "ingestion",
+                      "col":  2,
+                      "type":  "backend",
+                      "label":  "Video Ingestion",
+                      "width":  150
+                  },
+                  {
+                      "id":  "image_ingest",
+                      "lane":  "ingestion",
+                      "col":  3,
+                      "type":  "backend",
+                      "label":  "Image Ingestion",
+                      "width":  150
+                  },
+                  {
+                      "id":  "text_extract",
+                      "lane":  "ingestion",
+                      "col":  4,
+                      "type":  "backend",
+                      "label":  "Text Extraction",
+                      "width":  150
+                  },
+                  {
+                      "id":  "chunking",
+                      "lane":  "ingestion",
+                      "col":  5,
+                      "type":  "backend",
+                      "label":  "Chunking + 768-D Embeddings",
+                      "width":  200
+                  },
+                  {
+                      "id":  "session_kb",
+                      "lane":  "persistence",
+                      "col":  2,
+                      "type":  "database",
+                      "label":  "Unified Knowledge Base",
+                      "width":  150
+                  },
+                  {
+                      "id":  "query_planner",
+                      "lane":  "orchestration",
+                      "col":  2,
+                      "type":  "backend",
+                      "label":  "Query Planner",
+                      "width":  132
+                  },
+                  {
+                      "id":  "supervisor_langgraph",
+                      "lane":  "orchestration",
+                      "col":  3,
+                      "type":  "security",
+                      "label":  "Supervisor / LangGraph",
+                      "width":  150
+                  },
+                  {
+                      "id":  "tutor_agent",
+                      "lane":  "orchestration",
+                      "col":  4,
+                      "type":  "backend",
+                      "label":  "Tutor Agent",
+                      "width":  150
+                  },
+                  {
+                      "id":  "assessment_agent",
+                      "lane":  "orchestration",
+                      "col":  5,
+                      "type":  "backend",
+                      "label":  "Assessment Agent",
+                      "width":  150
+                  },
+                  {
+                      "id":  "misconception_agent",
+                      "lane":  "learning_agents",
+                      "col":  3,
+                      "type":  "backend",
+                      "label":  "Misconception Detection",
+                      "width":  170
+                  },
+                  {
+                      "id":  "knowledge_graph",
+                      "lane":  "learning_agents",
+                      "col":  2,
+                      "type":  "backend",
+                      "label":  "Knowledge Graph",
+                      "width":  150
+                  },
+                  {
+                      "id":  "study_planner",
+                      "lane":  "learning_agents",
+                      "col":  5,
+                      "type":  "backend",
+                      "label":  "Study Planner Agent",
+                      "width":  150
+                  },
+                  {
+                      "id":  "hybrid_retrieval",
+                      "lane":  "retrieval",
+                      "col":  2,
+                      "type":  "backend",
+                      "label":  "Hybrid Retrieval",
+                      "width":  150
+                  },
+                  {
+                      "id":  "source_verifier",
+                      "lane":  "retrieval",
+                      "col":  3,
+                      "type":  "security",
+                      "label":  "Source Verification",
+                      "width":  132
+                  },
+                  {
+                      "id":  "ollama",
+                      "lane":  "retrieval",
+                      "col":  4,
+                      "type":  "cloud",
+                      "label":  "Ollama",
+                      "width":  150
+                  },
+                  {
+                      "id":  "verified_citations",
+                      "lane":  "retrieval",
+                      "col":  5,
+                      "type":  "security",
+                      "label":  "Citation Check",
+                      "width":  150
+                  },
+                  {
+                      "id":  "sqlite",
+                      "lane":  "persistence",
+                      "col":  3,
+                      "type":  "database",
+                      "label":  "SQLite State",
+                      "width":  150
+                  },
+                  {
+                      "id":  "learner_mastery",
+                      "lane":  "persistence",
+                      "col":  4,
+                      "type":  "database",
+                      "label":  "Learner Mastery",
+                      "width":  150
+                  },
+                  {
+                      "id":  "recovery_engine",
+                      "lane":  "learning_agents",
+                      "col":  4,
+                      "type":  "backend",
+                      "label":  "Recovery Engine",
+                      "width":  150
+                  },
+                  {
+                      "id":  "personal_recommendations",
+                      "lane":  "student_ui",
+                      "col":  4,
+                      "type":  "frontend",
+                      "label":  "Recommendations",
+                      "width":  150
+                  },
+                  {
+                      "id":  "final_answer",
+                      "lane":  "student_ui",
+                      "col":  5,
+                      "type":  "frontend",
+                      "label":  "Final Grounded Response",
+                      "width":  170
+                  },
+                  {
+                      "id":  "index_error",
+                      "lane":  "exceptions",
+                      "col":  2,
+                      "type":  "security",
+                      "label":  "Processing Error",
+                      "width":  150
+                  },
+                  {
+                      "id":  "assessment_fallback",
+                      "lane":  "exceptions",
+                      "col":  3,
+                      "type":  "messagebus",
+                      "label":  "MCQ Fallback",
+                      "width":  150
+                  },
+                  {
+                      "id":  "refused_answer",
+                      "lane":  "exceptions",
+                      "col":  4,
+                      "type":  "security",
+                      "label":  "Grounding Refusal",
+                      "width":  150
+                  },
+                  {
+                      "id":  "ollama_error",
+                      "lane":  "exceptions",
+                      "col":  5,
+                      "type":  "security",
+                      "label":  "Ollama Unavailable",
+                      "width":  150
+                  }
+              ],
+    "edges":  [
+                  {
+                      "id":  "student_to_streamlit",
+                      "from":  "student",
+                      "to":  "streamlit",
+                      "variant":  "default"
+                  },
+                  {
+                      "id":  "streamlit_to_question",
+                      "from":  "streamlit",
+                      "to":  "question_input",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "pdf_to_extract",
+                      "from":  "pdf_ingest",
+                      "to":  "text_extract",
+                      "variant":  "default"
+                  },
+                  {
+                      "id":  "ppt_to_extract",
+                      "from":  "ppt_ingest",
+                      "to":  "text_extract",
+                      "variant":  "default"
+                  },
+                  {
+                      "id":  "video_to_segments",
+                      "from":  "video_ingest",
+                      "to":  "text_extract",
+                      "variant":  "default"
+                  },
+                  {
+                      "id":  "extract_to_chunk",
+                      "from":  "text_extract",
+                      "to":  "chunking",
+                      "variant":  "default"
+                  },
+                  {
+                      "id":  "question_to_planner",
+                      "from":  "question_input",
+                      "to":  "query_planner",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "planner_to_supervisor",
+                      "from":  "query_planner",
+                      "to":  "supervisor_langgraph",
+                      "variant":  "dashed",
+                      "role":  "branch"
+                  },
+                  {
+                      "id":  "kb_to_retrieval",
+                      "from":  "session_kb",
+                      "to":  "hybrid_retrieval",
+                      "variant":  "default"
+                  },
+                  {
+                      "id":  "planner_to_retrieval",
+                      "from":  "query_planner",
+                      "to":  "hybrid_retrieval",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "retrieval_to_verifier",
+                      "from":  "hybrid_retrieval",
+                      "to":  "source_verifier",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "verifier_to_tutor",
+                      "from":  "source_verifier",
+                      "to":  "tutor_agent",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "verifier_to_refusal",
+                      "from":  "source_verifier",
+                      "to":  "refused_answer",
+                      "variant":  "security",
+                      "role":  "error"
+                  },
+                  {
+                      "id":  "tutor_to_ollama",
+                      "from":  "tutor_agent",
+                      "to":  "ollama",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "ollama_to_citations",
+                      "from":  "ollama",
+                      "to":  "verified_citations",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "citations_to_final",
+                      "from":  "verified_citations",
+                      "to":  "final_answer",
+                      "variant":  "emphasis",
+                      "role":  "return"
+                  },
+                  {
+                      "id":  "question_to_assessment",
+                      "from":  "question_input",
+                      "to":  "assessment_agent",
+                      "variant":  "dashed",
+                      "role":  "branch"
+                  },
+                  {
+                      "id":  "assessment_to_verifier",
+                      "from":  "assessment_agent",
+                      "to":  "source_verifier",
+                      "variant":  "dashed"
+                  },
+                  {
+                      "id":  "assessment_to_fallback",
+                      "from":  "assessment_agent",
+                      "to":  "assessment_fallback",
+                      "variant":  "security",
+                      "role":  "error"
+                  },
+                  {
+                      "id":  "assessment_to_mastery",
+                      "from":  "assessment_agent",
+                      "to":  "learner_mastery",
+                      "variant":  "dashed"
+                  },
+                  {
+                      "id":  "mastery_to_misconception",
+                      "from":  "learner_mastery",
+                      "to":  "misconception_agent",
+                      "variant":  "dashed"
+                  },
+                  {
+                      "id":  "mastery_to_recovery",
+                      "from":  "learner_mastery",
+                      "to":  "recovery_engine",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "recovery_to_planner",
+                      "from":  "recovery_engine",
+                      "to":  "study_planner",
+                      "variant":  "dashed",
+                      "role":  "branch"
+                  },
+                  {
+                      "id":  "recovery_to_knowledge",
+                      "from":  "recovery_engine",
+                      "to":  "knowledge_graph",
+                      "variant":  "dashed"
+                  },
+                  {
+                      "id":  "mastery_to_sqlite",
+                      "from":  "learner_mastery",
+                      "to":  "sqlite",
+                      "variant":  "dashed",
+                      "role":  "async"
+                  },
+                  {
+                      "id":  "learner_to_recommendation",
+                      "from":  "learner_mastery",
+                      "to":  "personal_recommendations",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "recommendation_to_final",
+                      "from":  "personal_recommendations",
+                      "to":  "final_answer",
+                      "variant":  "dashed",
+                      "role":  "return"
+                  },
+                  {
+                      "id":  "ollama_to_error",
+                      "from":  "ollama",
+                      "to":  "ollama_error",
+                      "variant":  "security",
+                      "role":  "error"
+                  },
+                  {
+                      "id":  "index_to_error",
+                      "from":  "session_kb",
+                      "to":  "index_error",
+                      "variant":  "security",
+                      "role":  "error"
+                  },
+                  {
+                      "id":  "image_to_ollama",
+                      "from":  "image_ingest",
+                      "to":  "ollama",
+                      "variant":  "dashed",
+                      "role":  "branch"
+                  },
+                  {
+                      "from":  "question_input",
+                      "to":  "pdf_ingest",
+                      "variant":  "dashed",
+                      "id":  "intake_pdf"
+                  },
+                  {
+                      "from":  "question_input",
+                      "to":  "ppt_ingest",
+                      "variant":  "dashed",
+                      "id":  "intake_ppt"
+                  },
+                  {
+                      "from":  "question_input",
+                      "to":  "video_ingest",
+                      "variant":  "dashed",
+                      "id":  "intake_video"
+                  },
+                  {
+                      "from":  "question_input",
+                      "to":  "image_ingest",
+                      "variant":  "dashed",
+                      "id":  "intake_image"
+                  },
+                  {
+                      "id":  "ollama_direct_response",
+                      "to":  "final_answer",
+                      "from":  "ollama",
+                      "role":  "return",
+                      "variant":  "emphasis"
+                  },
+                  {
+                      "id":  "sqlite_load_mastery",
+                      "to":  "learner_mastery",
+                      "from":  "sqlite",
+                      "role":  "async",
+                      "variant":  "dashed"
+                  },
+                  {
+                      "id":  "chunk_to_kb",
+                      "from":  "chunking",
+                      "to":  "session_kb",
+                      "variant":  "emphasis"
+                  }
+              ],
+    "cards":  [
+                  {
+                      "dot":  "emerald",
+                      "title":  "Implemented",
+                      "items":  [
+                                    "PDF, PPT and Faster-Whisper ingestion",
+                                    "Feature-hash indexing and hybrid retrieval",
+                                    "Grounded tutoring and assessment",
+                                    "SQLite learner persistence",
+                                    "Deterministic knowledge graph and recovery",
+                                    "Evidence: current working tree; local Git commit objects are unavailable"
+                                ]
+                  },
+                  {
+                      "dot":  "amber",
+                      "title":  "Partial",
+                      "items":  [
+                                    "Image understanding requires local Ollava; PDF/PPT source images are not interpreted by text RAG",
+                                    "Query planner and verifier are small offline helper functions",
+                                    "Misconceptions are incorrect-answer cards, not an AI misconception classifier"
+                                ]
+                  },
+                  {
+                      "dot":  "rose",
+                      "title":  "Not Implemented",
+                      "items":  [
+                                    "No LangGraph supervisor or graph-based agent routing",
+                                    "No separate Study Planner Agent",
+                                    "No OCR pipeline for fully scanned documents",
+                                    "No speaker diarization or text-to-speech"
+                                ]
+                  }
+              ]
+}

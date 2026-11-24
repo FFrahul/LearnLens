@@ -1,0 +1,12 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+.env
+learnlens.db
+learner_state.json
+knowledge_tags.json
+evaluation_results.json
+evaluation_results.csv
+.streamlit/secrets.toml

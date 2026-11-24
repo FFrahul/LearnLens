@@ -13,17 +13,69 @@ from difflib import SequenceMatcher
 
 import json
 import random
+from types import SimpleNamespace
 # PyMuPDF; "import fitz" is deprecated in recent releases.
 import pymupdf as fitz
 import numpy as np
 import streamlit as st
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
-from google import genai
-from google.genai import types
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 
+from local_ai import (
+    LocalAIError,
+    LocalVideoTranscriber,
+    OllamaLocalAI,
+    feature_hash_embedding
+)
+from persistence import DEFAULT_STATE, SQLiteStateStore
+from knowledge_graph import build_knowledge_graph
+from learning_recovery import build_recovery_plan
+from agent_workflow import plan_learning_query, verify_retrieved_sources
+from experiment_readiness import assess_sequence_readiness
+from sequence_experiment import run_dnn_experiment, run_lstm_experiment
+from offline_evaluation import (
+    citation_coverage,
+    evaluate_offline,
+    precision_at_k,
+    recall_at_k,
+    reciprocal_rank,
+    source_matches,
+)
+from visual_learning import (
+    generate_concept_map,
+    generate_flowchart,
+    generate_narrated_lesson_script,
+    generate_revision_infographic,
+    generate_explainer_video,
+)
+from visuals.builder import build_visual
+from visuals.renderer import (
+    render_concept_map,
+    render_flowchart,
+    render_revision_sheet,
+    render_storyboard_svg,
+)
+from llm_router import HybridClient, render_mode_selector
+from ui.theme import GLOBAL_CSS as PHASE_ONE_CSS
+from ui.components import hero as render_hero
+from ui.components import stepper as render_stepper
+from assessment_fallback import build_deterministic_assessment_question
+from ingestion.pipeline import STAGES as EXTRACTION_STAGES
+from extraction_report.reporters import (
+    build_pdf_report,
+    build_pptx_report,
+    build_image_report,
+)
+from extraction_report.viewers import (
+    render_knowledge_structure,
+    render_pdf_report,
+    render_pptx_report,
+    render_image_report,
+    render_source_summary,
+    render_video_report,
+)
 from ragas.llms import llm_factory
 import asyncio
 from ragas.embeddings.base import BaseRagasEmbedding
@@ -40,15 +92,19 @@ from ragas.metrics.collections import (
 
 load_dotenv()
 
-API_KEY = os.getenv("GEMINI_API_KEY")
-
-GENERATION_MODEL = "gemini-3.5-flash-lite"
-EMBEDDING_MODEL = "gemini-embedding-2"
+LOCAL_AI = OllamaLocalAI()
+LOCAL_TRANSCRIBER = LocalVideoTranscriber()
+GENERATION_MODEL = LOCAL_AI.model
+EMBEDDING_MODEL = "local-feature-hash"
 EMBEDDING_DIMENSION = 768
+
 
 CHUNK_SIZE = 1200
 CHUNK_OVERLAP = 200
 TOP_K = 4
+MINIMUM_RETRIEVAL_SCORE = 0.05
+HYBRID_SEMANTIC_WEIGHT = 0.70
+HYBRID_LEXICAL_WEIGHT = 0.30
 
 
 # ---------------------------------------------------
@@ -291,6 +347,7 @@ button[data-testid="stBaseButton-primary"]:hover {
 """
 
 st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
+st.markdown(PHASE_ONE_CSS, unsafe_allow_html=True)
 
 
 def html_text(text):
@@ -366,64 +423,157 @@ def status_badges(labels):
 # HERO
 # ---------------------------------------------------
 
-st.markdown(
-    """
-<div class="ll-hero">
-  <div class="ll-powered">Powered by Gemini</div>
-  <div class="ll-hero-title">🎓 LearnLens AI</div>
-  <div class="ll-hero-tagline">Your AI-powered personalized learning companion</div>
-  <div class="ll-hero-copy">
-    Turn PDFs, lecture slides, videos and images into a source-grounded,
-    adaptive learning experience.
-  </div>
-  <span class="ll-chip">Multimodal Learning</span>
-  <span class="ll-chip ll-chip-cyan">Source-Grounded AI</span>
-  <span class="ll-chip">Adaptive Personalization</span>
-</div>
-""",
-    unsafe_allow_html=True
+LOCAL_MODEL_STATUS = LOCAL_AI.status()
+vision_model_name = os.getenv(
+    "LEARNLENS_OLLAMA_VISION_MODEL",
+    "llava:7b"
+)
+engine_name = (
+    "Gemini"
+    if st.session_state.get("ai_mode", "").startswith(("Online", "Auto"))
+    else "Ollama"
+)
+render_hero([
+    f"Engine: {engine_name}",
+    f"Model: {LOCAL_AI.model}",
+    f"Vision: {vision_model_name}",
+    "Status: " + (
+        "Ready"
+        if LOCAL_MODEL_STATUS["model_installed"]
+        else "Unavailable"
+    ),
+])
+
+has_material = any(
+    key in st.session_state
+    and st.session_state.get(key)
+    for key in ("chunks", "slide_chunks", "video_chunks")
+)
+completed_steps = {1} if has_material else set()
+current_step = 2 if has_material else 1
+render_stepper(current_step=current_step, completed_steps=completed_steps)
+
+st.markdown("**First-run checklist**")
+check_pdf = "✅" if has_material else "○"
+check_profile = "✅" if st.session_state.get(
+    "learner_profile", {}
+).get("diagnostic_completed") else "○"
+st.caption(
+    f"{check_pdf} Upload material   "
+    f"{check_profile} Complete the 3-question diagnostic"
 )
 
-with st.expander("🚀 3-Minute Demo Flow", expanded=False):
 
-    st.markdown(
-        """
-1. **🧭 Learner Profile** — set level, goal and explanation style.
-2. **📄 PDF · 📽️ Slides · 🎞️ Video** — upload learning materials
-   (they join one shared knowledge base).
-3. **🧭 Learner Profile → Diagnostic** — 3 questions
-   (Easy → Medium → Hard) estimate your starting level.
-4. **🎓 Unified Tutor** — ask an in-material question (cited answer),
-   then an off-material one (LearnLens declines instead of guessing).
-5. **🧠 Adaptive Assessment** — answer questions; difficulty adapts.
-6. **📊 Mastery Dashboard** — mastery, weak topics, likely misconceptions.
-7. **🧪 Evaluation** — RAGAS metrics, Quick Benchmark, synthetic
-   personalization benchmark.
-"""
+# ---------------------------------------------------
+# LOCAL MODEL
+# ---------------------------------------------------
+
+def _content_to_text(content):
+    if isinstance(content, str):
+        return content
+
+    if isinstance(content, (list, tuple)):
+        return "\n".join(
+            text for text in
+            (_content_to_text(item) for item in content)
+            if text
+        )
+
+    parts = getattr(content, "parts", None)
+    if parts is not None:
+        return _content_to_text(parts)
+
+    text = getattr(content, "text", None)
+    if isinstance(text, str) and text:
+        return text
+
+    if getattr(content, "inline_data", None) is not None:
+        raise LocalAIError(
+            "This local text model cannot analyze image content. "
+            "Use text-based PDF or slide content instead."
+        )
+
+    if getattr(content, "file_data", None) is not None:
+        raise LocalAIError(
+            "Remote media references are not supported in local-only mode."
+        )
+
+    raise LocalAIError(
+        "The local model received unsupported non-text content."
     )
 
 
-# ---------------------------------------------------
-# GEMINI
-# ---------------------------------------------------
+def ensure_retrieved_citations(answer, citations):
+    unique_citations = list(dict.fromkeys(
+        str(citation).strip()
+        for citation in citations
+        if str(citation).strip()
+    ))
+    if not unique_citations or is_refusal_answer(answer):
+        return answer
 
-if not API_KEY:
-    st.error(
-        "Gemini API key could not be found. Copy `.env.example` "
-        "to `.env`, set `GEMINI_API_KEY`, and restart the app."
+    answer_text = str(answer)
+    if any(citation in answer_text for citation in unique_citations):
+        return answer_text
+
+    return (
+        answer_text.rstrip()
+        + "\n\nSources: "
+        + "; ".join(unique_citations)
     )
-    st.stop()
 
-client = genai.Client(api_key=API_KEY)
+
+def generate_local_content(model, contents, config=None):
+    json_mode = (
+        getattr(config, "response_mime_type", None) == "application/json"
+        or (
+            isinstance(config, dict)
+            and config.get("response_mime_type") == "application/json"
+        )
+    )
+    prompt = _content_to_text(contents)
+    return SimpleNamespace(
+        text=LOCAL_AI.generate(prompt, json_mode=json_mode)
+    )
+
+
+def embed_local_content(contents):
+    contents_to_embed = (
+        contents
+        if isinstance(contents, (list, tuple))
+        else [contents]
+    )
+    return SimpleNamespace(
+        embeddings=[
+            SimpleNamespace(
+                values=feature_hash_embedding(
+                    _content_to_text(content)
+                )
+            )
+            for content in contents_to_embed
+        ]
+    )
+
+
+class _LocalModelMethods:
+    def generate_content(self, model, contents, config=None):
+        return generate_local_content(model, contents, config)
+
+    def embed_content(self, model, contents, config=None):
+        return embed_local_content(contents)
+
+
+offline_client = SimpleNamespace(models=_LocalModelMethods())
+client = HybridClient(offline_client)
+
 
 # ---------------------------------------------------
 # PERSISTENT LEARNER STATE
 # ---------------------------------------------------
 
-LEARNER_STATE_FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)
-    ),
+STATE_STORE = SQLiteStateStore()
+LEGACY_LEARNER_STATE_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
     "learner_state.json"
 )
 
@@ -432,15 +582,7 @@ def save_learner_state():
 
     state_data = {
         "learner_profile": st.session_state.get(
-            "learner_profile",
-            {
-                "level": "Intermediate",
-                "goal": "",
-                "explanation_style": "Balanced",
-                "diagnostic_completed": False,
-                "diagnostic_score": 0,
-                "diagnostic_total": 0
-            }
+            "learner_profile", DEFAULT_STATE["learner_profile"]
         ),
         "quiz_score": st.session_state.get(
             "quiz_score",
@@ -480,40 +622,15 @@ def save_learner_state():
         )
     }
 
-    temporary_file = (
-        LEARNER_STATE_FILE
-        + ".tmp"
-    )
-
-    # A locked file (e.g. OneDrive sync) must never break
-    # a quiz submit or tutor answer: warn and continue.
     try:
-
-        with open(
-            temporary_file,
-            "w",
-            encoding="utf-8"
-        ) as file:
-
-            json.dump(
-                state_data,
-                file,
-                ensure_ascii=False,
-                indent=4
-            )
-
-        os.replace(
-            temporary_file,
-            LEARNER_STATE_FILE
-        )
-
+        STATE_STORE.save(state_data)
         return True
 
     except Exception as e:
 
         st.warning(
-            "Learner progress could not be saved to "
-            f"learner_state.json ({type(e).__name__}). "
+            "Learner progress could not be saved to SQLite "
+            f"({type(e).__name__}). "
             "It is kept for this session."
         )
 
@@ -521,23 +638,21 @@ def save_learner_state():
 
 
 def load_learner_state():
-
-    if not os.path.exists(
-        LEARNER_STATE_FILE
-    ):
-        return
-
     try:
-
-        with open(
-            LEARNER_STATE_FILE,
-            "r",
-            encoding="utf-8"
-        ) as file:
-
-            state_data = json.load(
-                file
-            )
+        state_data = STATE_STORE.load()
+        if state_data is None:
+            if not os.path.exists(LEGACY_LEARNER_STATE_FILE):
+                return
+            with open(
+                LEGACY_LEARNER_STATE_FILE,
+                "r",
+                encoding="utf-8"
+            ) as file:
+                state_data = json.load(file)
+            if isinstance(state_data, dict):
+                STATE_STORE.save(state_data)
+            else:
+                return
 
         persistent_keys = [
             "learner_profile",
@@ -592,9 +707,7 @@ def load_learner_state():
 
     except Exception as e:
 
-        st.warning(
-            f"Saved learner state could not be loaded: {e}"
-        )
+        st.warning(f"Saved SQLite learner state could not be loaded: {e}")
 
 
 if "persistent_state_loaded" not in st.session_state:
@@ -719,7 +832,7 @@ def create_file_signature(files):
 PDF_MAX_IMAGES_PER_PAGE = 2
 PDF_MIN_IMAGE_SIDE = 80
 
-GEMINI_IMAGE_MIME_TYPES = {
+SUPPORTED_IMAGE_MIME_TYPES = {
     "png": "image/png",
     "jpg": "image/jpeg",
     "jpeg": "image/jpeg",
@@ -769,7 +882,7 @@ def extract_pdf_page_images(document, page):
             extracted.get("ext", "")
         ).lower()
 
-        mime_type = GEMINI_IMAGE_MIME_TYPES.get(
+        mime_type = SUPPORTED_IMAGE_MIME_TYPES.get(
             extension
         )
 
@@ -777,7 +890,7 @@ def extract_pdf_page_images(document, page):
 
         if mime_type is None:
 
-            # Convert formats Gemini does not accept
+            # Normalize uncommon image formats before local handling.
             # (e.g. JPX, JBIG2) to PNG.
             try:
                 pixmap = fitz.Pixmap(document, xref)
@@ -812,79 +925,9 @@ def collect_source_image_parts(
     source_types=("pdf", "slide"),
     max_per_source=2
 ):
-    """
-    Builds Gemini image parts for retrieved sources.
-    Each PDF page / slide contributes at most
-    max_per_source images, and the same page is never
-    sent twice (several chunks can share one page).
-    """
-
-    parts = []
-    seen_pages = set()
-
-    for source in sources:
-
-        source_type = source.get(
-            "source_type",
-            "pdf"
-        )
-
-        if source_type not in source_types:
-            continue
-
-        page_key = (
-            source.get("file", ""),
-            source_type,
-            source.get("page", source.get("slide", ""))
-        )
-
-        if page_key in seen_pages:
-            continue
-
-        seen_pages.add(page_key)
-
-        page_images = source.get(
-            "images",
-            []
-        )[:max_per_source]
-
-        if not page_images:
-            continue
-
-        if source_type == "slide":
-            label = (
-                f"[{source.get('file', '')}, "
-                f"Slide {source.get('slide', source.get('page', ''))}]"
-            )
-        else:
-            label = (
-                f"[{source.get('file', '')}, "
-                f"Page {source.get('page', '')}]"
-            )
-
-        label_added = False
-
-        for image_data in page_images:
-
-            try:
-
-                image_part = types.Part.from_bytes(
-                    data=image_data["bytes"],
-                    mime_type=image_data["mime_type"]
-                )
-
-                if not label_added:
-                    parts.append(
-                        f"Image(s) from {label}:"
-                    )
-                    label_added = True
-
-                parts.append(image_part)
-
-            except Exception:
-                pass
-
-    return parts
+    # Text-only Ollama generation must not emit repeated Streamlit notices.
+    # Embedded-figure limitations are documented in the feature copy instead.
+    return []
 
 
 def extract_pdf_chunks(files):
@@ -916,8 +959,7 @@ def extract_pdf_chunks(files):
                 if not page_images:
                     continue
 
-                # Figure-only page: keep it retrievable so
-                # its images can still reach Gemini.
+                # Keep a visible marker; the local text model cannot inspect it.
                 page_text = (
                     f"Page {page_number + 1} contains "
                     "visual content (figure/image) with "
@@ -954,21 +996,8 @@ def create_embeddings(chunks):
     for start in range(0, len(chunks), batch_size):
         batch = chunks[start:start + batch_size]
 
-        contents = [
-            types.Content(
-                parts=[
-                    types.Part.from_text(text=chunk["text"])
-                ]
-            )
-            for chunk in batch
-        ]
-
-        result = client.models.embed_content(
-            model=EMBEDDING_MODEL,
-            contents=contents,
-            config=types.EmbedContentConfig(
-                output_dimensionality=EMBEDDING_DIMENSION
-            )
+        result = embed_local_content(
+            [chunk["text"] for chunk in batch]
         )
 
         for embedding in result.embeddings:
@@ -978,13 +1007,7 @@ def create_embeddings(chunks):
 
 
 def create_question_embedding(question):
-    result = client.models.embed_content(
-        model=EMBEDDING_MODEL,
-        contents=question,
-        config=types.EmbedContentConfig(
-            output_dimensionality=EMBEDDING_DIMENSION
-        )
-    )
+    result = embed_local_content(question)
 
     return np.array(
         result.embeddings[0].values,
@@ -1030,270 +1053,190 @@ def retrieve_chunks(question, chunks, document_embeddings, top_k=4):
 # ---------------------------------------------------
 
 def answer_image_question(uploaded_image, question):
-    image_bytes = uploaded_image.getvalue()
-    mime_type = uploaded_image.type
-
-    image_part = types.Part.from_bytes(
-        data=image_bytes,
-        mime_type=mime_type
-    )
-
     prompt = f"""
-You are LearnLens AI, a multimodal personalized learning assistant.
+You are a local-only visual learning assistant.
+Answer the student's question using only the supplied image.
+If the image does not contain enough information, say so clearly.
+Answer in 1-3 direct sentences and use the question's language.
 
-The user uploaded an image and asked a question.
-
-Rules:
-1. Answer based on the visual content of the uploaded image.
-2. If the answer is uncertain, clearly say so.
-3. Explain clearly and educationally.
-4. Answer in the same language as the user's question.
-
-USER QUESTION:
+Student question:
 {question}
 """
-
-    response = client.models.generate_content(
-        model=GENERATION_MODEL,
-        contents=[image_part, prompt]
-    )
-
-    return response.text
+    try:
+        return LOCAL_AI.generate_with_image(
+            prompt,
+            uploaded_image.getvalue(),
+            uploaded_image.type or "application/octet-stream"
+        )
+    except LocalAIError as error:
+        raise LocalAIError(
+            "Local image understanding needs an Ollama vision model. "
+            "Install one locally (for example, llava:7b), set "
+            "LEARNLENS_OLLAMA_VISION_MODEL in .env, and retry. "
+            f"Details: {error}"
+        ) from error
 
 # ---------------------------------------------------
 # VIDEO FUNCTIONS
 # ---------------------------------------------------
 
-def upload_video_to_gemini(uploaded_video):
-    """
-    Uploads a video to Gemini Files API.
-    Reuses the same uploaded video during the session.
-    """
-
-    video_bytes = uploaded_video.getvalue()
-
+def prepare_local_video(uploaded_video):
     signature = hashlib.sha256(
-        video_bytes
+        uploaded_video.getvalue()
     ).hexdigest()
 
     if (
         st.session_state.get("video_signature") == signature
-        and "video_file_ref" in st.session_state
+        and "video_file_path" in st.session_state
     ):
-        return st.session_state.video_file_ref
+        return st.session_state.video_file_path
 
-    suffix = os.path.splitext(
-        uploaded_video.name
-    )[1]
+    suffix = os.path.splitext(uploaded_video.name)[1] or ".mp4"
+    temp_file = tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=suffix
+    )
+    temp_file.write(uploaded_video.getvalue())
+    temp_file.close()
 
-    if not suffix:
-        suffix = ".mp4"
+    st.session_state.video_signature = signature
+    st.session_state.video_file_path = temp_file.name
+    return temp_file.name
 
-    temp_path = None
 
+def format_timestamp(seconds):
+    total_seconds = max(0, int(seconds))
+    minutes, remaining_seconds = divmod(total_seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    if hours:
+        return f"{hours:02d}:{minutes:02d}:{remaining_seconds:02d}"
+    return f"{minutes:02d}:{remaining_seconds:02d}"
+
+
+def build_video_extraction_report(
+    video_ref,
+    video_name,
+    transcript_segments,
+):
+    duration_seconds = 0.0
+    frames_sampled = 0
     try:
-        with tempfile.NamedTemporaryFile(
-            delete=False,
-            suffix=suffix
-        ) as temp_file:
+        import av
 
-            temp_file.write(video_bytes)
-            temp_path = temp_file.name
-
-        video_file = client.files.upload(
-            file=temp_path
-        )
-
-        # Wait until Gemini finishes processing
-        # (bounded, so a stuck upload cannot hang the app).
-        processing_deadline = time.time() + 600
-
-        while True:
-
-            state = getattr(
-                video_file.state,
-                "name",
-                str(video_file.state)
-            )
-
-            if state == "ACTIVE":
-                break
-
-            if state == "FAILED":
-                raise RuntimeError(
-                    "Gemini could not process the video."
+        with av.open(video_ref) as container:
+            duration_seconds = float(container.duration or 0) / 1_000_000
+            stream = container.streams.video[0]
+            sample_seconds = [
+                duration_seconds * fraction
+                for fraction in (0.1, 0.25, 0.5, 0.75, 0.9)
+                if duration_seconds
+            ]
+            for timestamp in sample_seconds:
+                container.seek(
+                    int(timestamp * 1_000_000),
+                    stream=stream,
+                    any_frame=False,
                 )
+                try:
+                    next(container.decode(video=0))
+                    frames_sampled += 1
+                except StopIteration:
+                    pass
+    except Exception:
+        duration_seconds = 0.0
+        frames_sampled = 0
 
-            if time.time() > processing_deadline:
-                raise RuntimeError(
-                    "Gemini video processing timed out "
-                    "(10 minutes). Try a shorter video."
-                )
+    duration = format_timestamp(duration_seconds)
+    segments = []
+    for segment in transcript_segments:
+        start_seconds = 0
+        end_seconds = 0
+        if isinstance(segment, dict):
+            start_seconds = segment.get("start_seconds", 0)
+            end_seconds = segment.get("end_seconds", 0)
+            text = str(segment.get("text", "")).strip()
+        else:
+            text = str(segment).strip()
+        segments.append({
+            "start_seconds": int(start_seconds),
+            "end_seconds": int(end_seconds),
+            "start": format_timestamp(start_seconds),
+            "end": format_timestamp(end_seconds),
+            "text": text,
+        })
 
-            time.sleep(2)
-
-            video_file = client.files.get(
-                name=video_file.name
-            )
-
-        file_ref = {
-            "name": video_file.name,
-            "uri": video_file.uri,
-            "mime_type": video_file.mime_type
-        }
-
-        st.session_state.video_signature = signature
-        st.session_state.video_file_ref = file_ref
-
-        return file_ref
-
-    finally:
-
-        if (
-            temp_path
-            and os.path.exists(temp_path)
-        ):
-            os.remove(temp_path)
+    warnings = []
+    if not segments:
+        warnings.append("No speech detected in video.")
+    key_moment_segments = sorted(
+        segments,
+        key=lambda item: len(item["text"]),
+        reverse=True,
+    )[:5]
+    return {
+        "type": "video",
+        "name": video_name,
+        "duration": duration,
+        "frames_sampled": frames_sampled,
+        "segments": segments,
+        "key_moments": key_moment_segments,
+        "warnings": warnings,
+    }
 
 
 def answer_video_question(video_ref, question):
+    video_chunks = st.session_state.get("video_chunks", [])
+    video_embeddings = st.session_state.get("video_embeddings")
+    if not video_chunks or video_embeddings is None:
+        raise LocalAIError("The video transcript is not indexed yet.")
 
-    video_part = types.Part.from_uri(
-        file_uri=video_ref["uri"],
-        mime_type=video_ref["mime_type"]
+    retrieved_sources = retrieve_unified_sources(
+        question,
+        video_chunks,
+        video_embeddings,
+        min(TOP_K, len(video_chunks))
+    )
+    return answer_unified_question(
+        question,
+        retrieved_sources,
+        st.session_state.get("learner_profile", {}),
+        st.session_state.get("topic_performance", {})
     )
 
-    prompt = f"""
-You are LearnLens AI, a personalized multimodal
-learning assistant.
-
-Analyze the uploaded educational video and answer
-the student's question.
-
-RULES:
-
-1. Base your answer on the video.
-2. Do not invent information.
-3. If possible, include relevant timestamps.
-4. Explain the answer clearly like a tutor.
-5. Answer in the same language as the student's question.
-6. If the requested information is not present in the video,
-   clearly say so.
-
-STUDENT QUESTION:
-
-{question}
-"""
-
-    response = client.models.generate_content(
-        model=GENERATION_MODEL,
-        contents=[
-            video_part,
-            prompt
-        ]
-    )
-
-    return response.text
 
 def create_video_knowledge_chunks(video_ref, video_name):
-    """
-    Converts an uploaded video into timestamped
-    knowledge-base chunks.
-    """
-
-    video_part = types.Part.from_uri(
-        file_uri=video_ref["uri"],
-        mime_type=video_ref["mime_type"]
-    )
-
-    prompt = """
-You are preparing an educational video for a
-multimodal learning knowledge base.
-
-Analyze the entire video and divide it into meaningful
-educational segments.
-
-For every segment provide:
-- start timestamp
-- end timestamp
-- main topic
-- concise but informative description of what is taught
-
-IMPORTANT:
-- Preserve important definitions, explanations and examples.
-- Do not invent information.
-- Use timestamps from the video.
-- Return ONLY valid JSON.
-- Do not use Markdown.
-
-Return exactly this structure:
-
-{
-  "segments": [
-    {
-      "start": "00:00",
-      "end": "00:20",
-      "topic": "Topic name",
-      "text": "Educational content explained in this segment"
-    }
-  ]
-}
-"""
-
-    response = client.models.generate_content(
-        model=GENERATION_MODEL,
-        contents=[
-            video_part,
-            prompt
-        ],
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json"
+    cache_key = st.session_state.get("video_signature")
+    model_size = LOCAL_TRANSCRIBER.model_size
+    if cache_key:
+        cached_chunks = STATE_STORE.load_video_transcript(
+            cache_key,
+            model_size
         )
-    )
+        if cached_chunks:
+            return cached_chunks
 
-    cleaned = clean_json_response(
-        response.text
-    )
-
-    data = json.loads(cleaned)
-
-    segments = data.get(
-        "segments",
-        []
-    )
-
+    transcript = LOCAL_TRANSCRIBER.transcribe(video_ref)
     chunks = []
-
-    for segment in segments:
-
-        # Empty segments cannot be embedded or cited.
-        if (
-            not isinstance(segment, dict)
-            or not str(segment.get("text", "")).strip()
-        ):
-            continue
-
+    for segment in transcript:
+        start = format_timestamp(segment.start)
+        end = format_timestamp(segment.end)
         chunks.append({
-            "text": segment.get(
-                "text",
-                ""
-            ),
+            "text": segment.text,
             "file": video_name,
             "source_type": "video",
-            "start": segment.get(
-                "start",
-                "Unknown"
-            ),
-            "end": segment.get(
-                "end",
-                "Unknown"
-            ),
-            "topic": segment.get(
-                "topic",
-                "General"
-            )
+            "start": start,
+            "end": end,
+            "start_seconds": segment.start,
+            "end_seconds": segment.end,
+            "citation": f"[{video_name}, {start} - {end}]",
+            "topic": "Video transcript"
         })
-
+    if cache_key and chunks:
+        STATE_STORE.save_video_transcript(
+            cache_key,
+            model_size,
+            chunks
+        )
     return chunks
 
 
@@ -1319,6 +1262,9 @@ def extract_pptx_slides(file_name, file_bytes):
 
         texts = []
         images = []
+        charts = 0
+        title = ""
+        speaker_notes = ""
 
         for shape in slide.shapes:
 
@@ -1329,6 +1275,13 @@ def extract_pptx_slides(file_name, file_bytes):
 
                 if shape_text:
                     texts.append(shape_text)
+                    if not title:
+                        try:
+                            placeholder_type = shape.placeholder_format.type
+                            if "TITLE" in str(placeholder_type).upper():
+                                title = shape_text
+                        except Exception:
+                            pass
 
                         # Extract table content
             if getattr(shape, "has_table", False):
@@ -1373,6 +1326,19 @@ def extract_pptx_slides(file_name, file_bytes):
                 except Exception:
                     pass
 
+            if shape.shape_type == MSO_SHAPE_TYPE.CHART:
+                charts += 1
+
+        try:
+            notes_frame = slide.notes_slide.notes_text_frame
+            speaker_notes = " ".join(
+                line.strip()
+                for line in notes_frame.text.splitlines()
+                if line.strip()
+            )
+        except Exception:
+            speaker_notes = ""
+
         slide_text = "\n".join(texts).strip()
 
         if not slide_text:
@@ -1388,7 +1354,10 @@ def extract_pptx_slides(file_name, file_bytes):
             "file": file_name,
             "page": slide_number,
             "slide": slide_number,
-            "images": images
+            "images": images,
+            "title": title or f"Slide {slide_number}",
+            "speaker_notes": speaker_notes,
+            "charts": charts,
         })
 
     return slides
@@ -1406,6 +1375,12 @@ def answer_slide_question(
         slide_embeddings,
         min(3, len(slide_chunks))
     )
+
+    if (
+        not retrieved_slides
+        or retrieved_slides[0]["score"] < MINIMUM_RETRIEVAL_SCORE
+    ):
+        return REFUSAL_MESSAGE, []
 
     context_parts = []
 
@@ -1428,23 +1403,25 @@ Slide: {slide['slide']}
     context = "\n".join(context_parts)
 
     prompt = f"""
-You are LearnLens AI, a multimodal personalized
+You are LearnLens AI, a local text-based personalized
 learning assistant.
 
-Answer the student's question using ONLY the
-retrieved PowerPoint slides.
+Answer the student's question using ONLY the extracted
+text from the retrieved PowerPoint slides.
 
 RULES:
 
-1. Use only the provided slide content and images.
+1. Use only the provided slide text.
 2. Do not invent information.
 3. Answer in the same language as the student's question.
-4. Explain clearly like a tutor.
+4. Answer in 1-3 direct sentences; no greeting, analogy, or
+   example unless the retrieved text contains it.
 5. Cite relevant slides using:
 
    [File name, Slide X]
 
-6. If the information cannot be found, say so.
+6. If the information cannot be found, say so. Do not invent
+   facts or citations.
 
 RETRIEVED SLIDES:
 
@@ -1455,34 +1432,21 @@ STUDENT QUESTION:
 {question}
 """
 
-    contents = [prompt]
-
-    # Add relevant images from retrieved slides.
-    # Maximum 2 images per slide to keep requests manageable.
-    for slide in retrieved_slides:
-
-        for image_data in slide["images"][:2]:
-
-            try:
-
-                contents.append(
-                    types.Part.from_bytes(
-                        data=image_data["bytes"],
-                        mime_type=image_data[
-                            "mime_type"
-                        ]
-                    )
-                )
-
-            except Exception:
-                pass
+    collect_source_image_parts(retrieved_slides, source_types=("slide",))
 
     response = client.models.generate_content(
         model=GENERATION_MODEL,
-        contents=contents
+        contents=prompt
     )
 
-    return response.text, retrieved_slides
+    slide_citations = [
+        f"[{slide['file']}, Slide {slide['slide']}]"
+        for slide in retrieved_slides
+    ]
+    return (
+        ensure_retrieved_citations(response.text, slide_citations),
+        retrieved_slides
+    )
 
 # ---------------------------------------------------
 # UNIFIED MULTIMODAL KNOWLEDGE BASE
@@ -1605,9 +1569,65 @@ def retrieve_unified_sources(
         vectors
     )
 
-    top_indices = np.argsort(
-        similarities
-    )[::-1][:top_k]
+    query_tokens = re.findall(r"\w+", question.casefold())
+    document_tokens = [
+        re.findall(r"\w+", str(item.get("text", "")).casefold())
+        for item in items
+    ]
+    document_count = len(document_tokens)
+    average_length = (
+        sum(len(tokens) for tokens in document_tokens) / document_count
+        if document_count
+        else 0
+    )
+    document_frequency = {}
+    for tokens in document_tokens:
+        for token in set(tokens):
+            document_frequency[token] = document_frequency.get(token, 0) + 1
+
+    lexical_scores = []
+    for tokens in document_tokens:
+        frequencies = {}
+        for token in tokens:
+            frequencies[token] = frequencies.get(token, 0) + 1
+        score = 0.0
+        for token in query_tokens:
+            if token not in frequencies:
+                continue
+            inverse_frequency = math.log(
+                1
+                + (document_count - document_frequency.get(token, 0) + 0.5)
+                / (document_frequency.get(token, 0) + 0.5)
+            )
+            length_factor = (
+                1.0
+                - 0.75
+                + 0.75 * len(tokens) / average_length
+                if average_length
+                else 1.0
+            )
+            score += inverse_frequency * (
+                frequencies[token] * 2.2
+                / (frequencies[token] + length_factor)
+            )
+        lexical_scores.append(score)
+
+    maximum_lexical_score = max(lexical_scores, default=0.0)
+    if maximum_lexical_score:
+        lexical_scores = [
+            score / maximum_lexical_score
+            for score in lexical_scores
+        ]
+
+    hybrid_scores = np.array([
+        HYBRID_SEMANTIC_WEIGHT * float(similarity)
+        + HYBRID_LEXICAL_WEIGHT * lexical_score
+        for similarity, lexical_score in zip(
+            similarities,
+            lexical_scores
+        )
+    ])
+    top_indices = np.argsort(hybrid_scores)[::-1][:top_k]
 
     results = []
 
@@ -1615,9 +1635,9 @@ def retrieve_unified_sources(
 
         item = items[index].copy()
 
-        item["score"] = float(
-            similarities[index]
-        )
+        item["score"] = float(hybrid_scores[index])
+        item["semantic_score"] = float(similarities[index])
+        item["lexical_score"] = float(lexical_scores[index])
 
         results.append(item)
 
@@ -1637,6 +1657,16 @@ def answer_unified_question(
 
     if topic_performance is None:
         topic_performance = {}
+
+    query_plan = plan_learning_query(question)
+    question = query_plan["question"]
+    decision = verify_retrieved_sources(
+        retrieved_sources,
+        MINIMUM_RETRIEVAL_SCORE
+    )
+    if not decision.accepted_sources:
+        return REFUSAL_MESSAGE
+    retrieved_sources = decision.accepted_sources
 
     learner_level = learner_profile.get(
         "level",
@@ -1858,15 +1888,16 @@ STRICT GROUNDING RULES:
 
 1. Answer ONLY using the retrieved material.
 2. Never invent course information.
-3. If the material does not contain enough information,
+3. Keep the answer concise (1-3 direct sentences). Do not greet
+   the student or add analogies/examples absent from the source.
+4. If the material does not contain enough information,
    clearly say:
-   "Bu bilgi yüklenen ders materyallerinde bulunamadı."
-4. Write the whole answer in the language of the STUDENT
+   "This information was not found in the uploaded learning materials."
+5. Write the whole answer in the language of the STUDENT
    QUESTION below (an English question gets an English
    answer), even if the retrieved material or the learning
    goal is in another language. Only the refusal sentence
    in rule 3 is always written exactly as given.
-5. Explain concepts clearly like a tutor.
 6. Every important claim must contain its source citation.
 7. Preserve the exact citation supplied below.
 8. PDF sources must cite page numbers.
@@ -1904,9 +1935,12 @@ Answer in the language of the student question above.
         contents=contents
     )
 
-    return response.text
+    return ensure_retrieved_citations(
+        response.text,
+        [source["citation"] for source in retrieved_sources]
+    )
 
-class FixedGeminiRagasEmbeddings(
+class LocalRagasEmbeddings(
     BaseRagasEmbedding
 ):
 
@@ -1916,17 +1950,7 @@ class FixedGeminiRagasEmbeddings(
         **kwargs
     ):
 
-        result = client.models.embed_content(
-            model=EMBEDDING_MODEL,
-            contents=text,
-            config=types.EmbedContentConfig(
-                output_dimensionality=EMBEDDING_DIMENSION
-            )
-        )
-
-        return list(
-            result.embeddings[0].values
-        )
+        return feature_hash_embedding(text)
 
     async def aembed_text(
         self,
@@ -1947,11 +1971,8 @@ def run_ragas_evaluation(
 ):
 
     ragas_client = AsyncOpenAI(
-        api_key=API_KEY,
-        base_url=(
-            "https://generativelanguage.googleapis.com/"
-            "v1beta/openai/"
-        )
+        api_key="ollama-local",
+        base_url=f"{LOCAL_AI.host}/v1"
     )
 
     evaluator_llm = llm_factory(
@@ -1961,7 +1982,7 @@ def run_ragas_evaluation(
     )
 
     evaluator_embeddings = (
-        FixedGeminiRagasEmbeddings()
+        LocalRagasEmbeddings()
     )
 
     faithfulness_metric = Faithfulness(
@@ -2379,51 +2400,12 @@ Return ONLY valid JSON:
     ]
 
     if relevant_sources:
-
-        # Same PDF page images the generator saw
-        # (max 2 per page).
-        verification_contents.extend(
-            collect_source_image_parts(
-                relevant_sources,
-                source_types=("pdf",),
-                max_per_source=2
-            )
-        )
-
-        for source in relevant_sources:
-
-            if (
-                source.get("source_type")
-                == "slide"
-            ):
-
-                for image_data in source.get(
-                    "images",
-                    []
-                )[:4]:
-
-                    try:
-
-                        verification_contents.append(
-                            types.Part.from_bytes(
-                                data=image_data[
-                                    "bytes"
-                                ],
-                                mime_type=image_data[
-                                    "mime_type"
-                                ]
-                            )
-                        )
-
-                    except Exception:
-                        pass
+        collect_source_image_parts(relevant_sources)
 
     response = client.models.generate_content(
         model=GENERATION_MODEL,
         contents=verification_contents,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json"
-        )
+        config={"response_mime_type": "application/json"}
     )
 
     cleaned = clean_json_response(
@@ -2771,9 +2753,7 @@ Return this exact JSON structure:
 }}
 """
 
-        # PDF figures of the selected pages help the model
-        # understand the material (max 2 per page). The verifier
-        # receives the same images.
+        # The local text model only sees extracted source text.
         generation_contents = [prompt]
 
         generation_contents.extend(
@@ -2784,14 +2764,12 @@ Return this exact JSON structure:
             )
         )
 
-        # API errors (including quota) propagate immediately so
-        # a failing request is not retried 8 times.
+        # Local model errors propagate immediately so a failing request
+        # is not retried 8 times.
         response = client.models.generate_content(
             model=GENERATION_MODEL,
             contents=generation_contents,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json"
-            )
+            config={"response_mime_type": "application/json"}
         )
 
         cleaned = clean_json_response(
@@ -2945,6 +2923,31 @@ Return this exact JSON structure:
 
         return question_data
 
+    fallback = build_deterministic_assessment_question(
+        pool_items,
+        difficulty,
+        question_index=st.session_state.get(
+            "diagnostic_index",
+            st.session_state.get("quiz_total", 0)
+        ),
+        seen_correct_answers=st.session_state.setdefault(
+            "fallback_correct_answers",
+            set()
+        ),
+    )
+    if fallback is not None:
+        st.session_state.setdefault(
+            "fallback_correct_answers",
+            set()
+        ).add(
+            str(fallback["correct_answer"]).casefold()
+        )
+        st.session_state.seen_questions.add(
+            normalize_question_text(fallback["question"])
+        )
+        fallback["generated_topic"] = str(fallback["topic"])
+        return fallback
+
     raise ValueError(
         "LearnLens could not generate a verified "
         "non-repeated question from the selected material. "
@@ -2993,9 +2996,7 @@ Return:
     response = client.models.generate_content(
         model=GENERATION_MODEL,
         contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json"
-        )
+        config={"response_mime_type": "application/json"}
     )
 
     cleaned = clean_json_response(
@@ -3082,7 +3083,7 @@ STRUGGLE_SIGNALS = [
 ]
 
 REFUSAL_MESSAGE = (
-    "Bu bilgi yüklenen ders materyallerinde bulunamadı."
+    "This information was not found in the uploaded learning materials."
 )
 
 # Compared after normalize_for_matching(): lowercase, Turkish
@@ -3630,81 +3631,61 @@ RAGAS_METRIC_KEYS = [
 ]
 
 DEFAULT_EVALUATION_TESTSET = {
-    "name": "Kümeleme demo test set",
-    "material": "Kümeleme.pptx",
+    "name": "Clustering demo test set",
+    "material": "Clustering_Lecture.pptx",
     "test_cases": [
         {
             "id": "kumeleme_01",
-            "question": "Minkowski uzaklığı nedir?",
+            "question": "What is the Minkowski distance?",
             "reference_answer": (
-                "Minkowski uzaklığı, p sayıda değişken "
-                "dikkate alınarak gözlemler arasındaki "
-                "uzaklığı hesaplamak için kullanılan genel "
-                "bir uzaklık bağıntısıdır."
+                "Minkowski distance is a general formula for the "
+                "distance between observations across p variables."
             ),
-            "expected_source": "Kümeleme.pptx, Slide 7",
+            "expected_source": "Clustering_Lecture.pptx, Slide 7",
             "should_refuse": False
         },
         {
             "id": "kumeleme_02",
-            "question": (
-                "Simetrik uzaklık matrisinde d(i,j) ile "
-                "d(j,i) arasındaki ilişki nedir?"
-            ),
+            "question": "What is the relationship between d(i,j) and d(j,i) in a symmetric distance matrix?",
             "reference_answer": (
-                "Simetrik uzaklık matrisinde d(i,j)=d(j,i) "
-                "kabul edilir."
+                "In a symmetric distance matrix, d(i,j) equals d(j,i)."
             ),
-            "expected_source": "Kümeleme.pptx, Slide 4",
+            "expected_source": "Clustering_Lecture.pptx, Slide 4",
             "should_refuse": False
         },
         {
             "id": "kumeleme_03",
-            "question": (
-                "En yakın komşu algoritmasında iki küme "
-                "arasındaki uzaklık nasıl belirlenir?"
-            ),
+            "question": "How is distance calculated with single linkage?",
             "reference_answer": (
-                "İki kümenin içerdiği gözlemler arasında "
-                "birbirine en yakın olanların uzaklığı iki "
-                "küme arasındaki uzaklık olarak alınır."
+                "Single linkage uses the shortest distance between "
+                "any observations in the two clusters."
             ),
-            "expected_source": "Kümeleme.pptx, Slide 12",
+            "expected_source": "Clustering_Lecture.pptx, Slide 12",
             "should_refuse": False
         },
         {
             "id": "kumeleme_04",
-            "question": (
-                "En uzak komşu algoritmasında iki küme "
-                "arasındaki uzaklık nasıl belirlenir?"
-            ),
+            "question": "How is distance calculated with complete linkage?",
             "reference_answer": (
-                "İki kümenin birbirine en uzak elemanları "
-                "arasındaki mesafe kümeler arasındaki "
-                "uzaklık olarak alınır."
+                "Complete linkage uses the longest distance between "
+                "any observations in the two clusters."
             ),
-            "expected_source": "Kümeleme.pptx, Slide 19",
+            "expected_source": "Clustering_Lecture.pptx, Slide 19",
             "should_refuse": False
         },
         {
             "id": "kumeleme_05",
-            "question": (
-                "k-ortalamalar yönteminin temel amacı nedir?"
-            ),
+            "question": "What is the main objective of k-means?",
             "reference_answer": (
-                "k-ortalamalar yönteminin amacı verilen K "
-                "değeri için toplam kare hatayı minimize "
-                "eden kümeleri bulmaktır."
+                "For a chosen value of K, k-means minimizes the "
+                "total within-cluster sum of squared error."
             ),
-            "expected_source": "Kümeleme.pptx, Slide 24",
+            "expected_source": "Clustering_Lecture.pptx, Slide 24",
             "should_refuse": False
         },
         {
             "id": "off_material_01",
-            "question": (
-                "Yapay sinir ağlarında backpropagation "
-                "algoritması nedir?"
-            ),
+            "question": "What is the backpropagation algorithm in neural networks?",
             "reference_answer": REFUSAL_MESSAGE,
             "expected_source": "",
             "should_refuse": True
@@ -3938,6 +3919,11 @@ def run_benchmark_case(
         "source_match": None,
         "source_in_retrieved": None,
         "source_in_answer": None,
+        "precision_at_5": None,
+        "recall_at_5": None,
+        "reciprocal_rank": None,
+        "citation_covered": None,
+        "source_correctness": None,
         "faithfulness": None,
         "answer_relevancy": None,
         "context_precision": None,
@@ -3966,6 +3952,26 @@ def run_benchmark_case(
                 "Retrieval returned no sources for this question."
             )
 
+        relevant_citations = (
+            [case["expected_source"]]
+            if case["expected_source"]
+            else []
+        )
+        result["precision_at_5"] = precision_at_k(
+            result["retrieved_citations"],
+            relevant_citations,
+            5,
+        )
+        result["recall_at_5"] = recall_at_k(
+            result["retrieved_citations"],
+            relevant_citations,
+            5,
+        )
+        result["reciprocal_rank"] = reciprocal_rank(
+            result["retrieved_citations"],
+            relevant_citations,
+        )
+
         answer = answer_unified_question(
             case["question"],
             retrieved_sources,
@@ -3980,6 +3986,20 @@ def run_benchmark_case(
         result["refused"] = refused
         result["refusal_correct"] = (
             refused == case["should_refuse"]
+        )
+        result["citation_covered"] = (
+            citation_coverage(answer, result["retrieved_citations"])
+            if not case["should_refuse"]
+            else None
+        )
+        result["source_correctness"] = (
+            source_matches(
+                case["expected_source"],
+                result["retrieved_citations"],
+                answer,
+            )
+            if case["expected_source"]
+            else None
         )
 
         if case["expected_source"]:
@@ -4032,14 +4052,15 @@ QUICK_BENCHMARK_REFUSAL_CASES = 1
 BENCHMARK_CASE_DELAY_SECONDS = 5
 
 QUOTA_ERROR_MESSAGE = (
-    "Gemini API quota reached. Wait for quota reset and retry."
+    "The local model is temporarily resource-limited. Check Ollama and "
+    "available memory, then retry."
 )
 
 
 def is_quota_error(error):
     """
-    Detects Gemini 429 / RESOURCE_EXHAUSTED errors, also when
-    RAGAS or the OpenAI client wraps the original exception.
+    Detects local inference resource errors, including those wrapped by
+    the OpenAI-compatible Ollama client.
     """
 
     current = error
@@ -4072,10 +4093,9 @@ def is_quota_error(error):
 
 def select_quick_benchmark_cases(test_cases):
     """
-    Quota-safe subset: first off-material (refusal) case +
-    first 2 in-material cases. The refusal case runs first
-    because it needs no RAGAS calls (cheapest), so it still
-    completes if the quota runs out later.
+    Lightweight subset: first off-material case and first two
+    in-material cases. The refusal case runs first because it
+    does not require RAGAS judging.
     """
 
     in_material = [
@@ -4110,7 +4130,7 @@ def skipped_benchmark_case(case):
         "context_recall": None,
         "retrieved_citations": [],
         "answer": "",
-        "error": "Not run: Gemini API quota reached."
+        "error": "Not run: local model resource limit reached."
     }
 
 
@@ -4119,7 +4139,7 @@ def summarize_benchmark(results):
     summary = {}
 
     # Only fully successful cases count towards scores, so a
-    # quota-interrupted run is never shown as a valid result.
+    # interrupted run is never shown as a valid result.
     successful_results = [
         result for result in results
         if result.get("status") == "ok"
@@ -4180,6 +4200,34 @@ def summarize_benchmark(results):
         if source_checks
         else None
     )
+
+    offline_records = [
+        {
+            "ranked_citations": result.get("retrieved_citations", []),
+            "relevant_citations": (
+                [result["expected_source"]]
+                if result.get("expected_source")
+                else []
+            ),
+            "citations": result.get("retrieved_citations", []),
+            "answer": result.get("answer", ""),
+            "expected_source": result.get("expected_source", ""),
+            "should_refuse": bool(result.get("should_refuse")),
+            "refused": bool(result.get("refused")),
+        }
+        for result in successful_results
+    ]
+    offline = evaluate_offline(offline_records, k=5)
+    summary.update({
+        "offline_precision_at_5": offline["precision_at_5"],
+        "offline_recall_at_5": offline["recall_at_5"],
+        "offline_mrr": offline["mrr"],
+        "offline_citation_coverage": offline["citation_coverage"],
+        "offline_source_correctness": offline["source_correctness"],
+        "offline_refusal_accuracy": offline["refusal"]["accuracy"],
+        "offline_refusal_precision": offline["refusal"]["precision"],
+        "offline_refusal_recall": offline["refusal"]["recall"],
+    })
 
     summary["total_cases"] = len(results)
     summary["successful_cases"] = len(successful_results)
@@ -4259,6 +4307,11 @@ def save_benchmark_results(
         "source_match",
         "source_in_retrieved",
         "source_in_answer",
+        "precision_at_5",
+        "recall_at_5",
+        "reciprocal_rank",
+        "citation_covered",
+        "source_correctness",
         "faithfulness",
         "answer_relevancy",
         "context_precision",
@@ -4488,8 +4541,8 @@ def apply_knowledge_tags(items):
 
 def tag_knowledge_items(items, progress_callback=None):
     """
-    Tags untagged knowledge units with Gemini in batches of
-    KNOWLEDGE_TAG_BATCH_SIZE (one API call per batch, never
+    Tags untagged knowledge units with the local model in batches of
+    KNOWLEDGE_TAG_BATCH_SIZE (one inference call per batch, never
     one per chunk). Results are cached in knowledge_tags.json.
     A failed batch is skipped; RAG keeps working without tags.
     """
@@ -4593,9 +4646,7 @@ KNOWLEDGE UNITS:
             response = client.models.generate_content(
                 model=GENERATION_MODEL,
                 contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
-                )
+                config={"response_mime_type": "application/json"}
             )
 
             data = json.loads(
@@ -4669,7 +4720,7 @@ def auto_tag_knowledge_items(items):
     """
     Generates tags only for the given units that are not cached
     yet (e.g. the sources of one tutor answer or one assessment
-    question: at most one batched Gemini call). Units that failed
+    question: at most one batched local-model call). Units that failed
     once in this session are not retried automatically, so a
     failure never causes repeated calls on later reruns.
     Never raises; RAG works without tags.
@@ -4732,19 +4783,286 @@ def auto_tag_knowledge_items(items):
 # TABS
 # ---------------------------------------------------
 
-# Tabs are displayed in demo order; each "with tabN:" block
-# below keeps its original variable name.
-tab8, tab1, tab6, tab5, tab2, tab7, tab3, tab4, tab9 = st.tabs([
-    "🧭 Learner Profile",
-    "📄 PDF RAG",
-    "📽️ Slide Understanding",
-    "🎞️ Video Understanding",
-    "🖼️ Image Understanding",
-    "🎓 Unified Tutor",
-    "🧠 Adaptive Assessment",
-    "📊 Mastery Dashboard",
-    "🧪 Evaluation"
+# ---------------------------------------------------
+# 4-STEP WORKFLOW NAVIGATION
+# ---------------------------------------------------
+tab_upload, tab_learn, tab_practice, tab_progress = st.tabs([
+    "Upload",
+    "Learn",
+    "Practice",
+    "Progress",
 ])
+
+with tab_upload:
+    tab1, tab6, tab2, tab5 = st.tabs([
+        "PDF",
+        "Slides",
+        "Image",
+        "Video",
+    ])
+
+with tab_learn:
+    tab7, tab10, tab11 = st.tabs([
+        "Unified Tutor",
+        "Visual Studio",
+        "Reference Videos",
+    ])
+
+with tab11:
+    section_header(
+        "Reference Videos",
+        "Verified YouTube links for extra study. Links are references only; no video is downloaded.",
+        eyebrow="Learn · External references",
+    )
+    reference_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "samples",
+        "reference_videos.json",
+    )
+    try:
+        with open(reference_path, "r", encoding="utf-8") as reference_file:
+            reference_data = json.load(reference_file)
+        videos = reference_data.get("videos", [])
+
+        topics = list(dict.fromkeys(
+            str(video.get("topic", "")).strip()
+            for video in videos
+            if str(video.get("topic", "")).strip()
+        ))
+        selected_topic = st.selectbox(
+            "Topic",
+            ["All topics"] + topics,
+            key="reference_video_topic",
+        )
+        filtered_videos = [
+            video for video in videos
+            if selected_topic == "All topics"
+            or video.get("topic") == selected_topic
+        ]
+        if not filtered_videos:
+            st.info("No reference videos are available for this topic.")
+        else:
+            st.caption(
+                f"{len(filtered_videos)} verified reference links. "
+                "Licence status must be checked on YouTube before download."
+            )
+            for video in filtered_videos:
+                with st.container(key=f"reference_{hash(video['url'])}"):
+                    st.markdown(
+                        f"**[{html_text(video['title'])}]({video['url']})**"
+                    )
+                    st.caption(
+                        f"{video['channel']} · {video['duration']} · "
+                        f"{video['topic']} · "
+                        f"{video['licence_status']}"
+                    )
+                    st.write(video["why_useful"])
+    except Exception as reference_error:
+        st.warning(
+            "Reference videos could not be loaded: "
+            + describe_api_error(reference_error)
+        )
+
+with tab_practice:
+    tab3, tab9 = st.tabs([
+        "Adaptive Assessment",
+        "Evaluation",
+    ])
+
+with tab_progress:
+    tab8, tab4 = st.tabs([
+        "Learner Profile",
+        "Mastery Dashboard",
+    ])
+# ===================================================
+# VISUAL LEARNING STUDIO
+# ===================================================
+
+with tab10:
+    section_header(
+        "🎨 Visual Learning Studio",
+        "Generate readable diagrams from your extracted learning sources.",
+        eyebrow="Step 3 · Learn"
+    )
+
+    visual_items, _ = build_unified_knowledge_base()
+    source_topics = [
+        str(item.get("topic", "")).strip()
+        for item in visual_items
+        if str(item.get("topic", "")).strip()
+    ]
+    source_concepts = [
+        str(item.get("subtopic", "")).strip()
+        for item in visual_items
+        if str(item.get("subtopic", "")).strip()
+    ]
+    default_topic = source_topics[0] if source_topics else "Hierarchical Clustering"
+    default_points = list(dict.fromkeys(
+        source_concepts or [
+            "Distance between clusters",
+            "Agglomerative merging",
+            "Dendrogram interpretation",
+        ]
+    ))[:8]
+
+    if not visual_items:
+        st.info(
+            "No learning material is ready yet. Upload and process a PDF, "
+            "PPTX or video first, then Visual Studio will use that source."
+        )
+
+    visual_topic = st.text_input(
+        "Topic",
+        value=st.session_state.get("visual_topic", default_topic),
+        key="visual_topic"
+    )
+    visual_points = st.text_area(
+        "Key concepts or steps (one per line)",
+        value="\n".join(default_points),
+        key="visual_points"
+    )
+    visual_items = [
+        item.strip() for item in visual_points.splitlines() if item.strip()
+    ]
+    detail_level = st.segmented_control(
+        "Detail",
+        options=["Simplify", "Add detail"],
+        default="Simplify",
+        key="visual_detail",
+    )
+
+    source_items, _ = build_unified_knowledge_base()
+    source_citations = list(dict.fromkeys(
+        str(item.get("citation", "")).strip()
+        for item in source_items
+        if str(item.get("citation", "")).strip()
+    ))
+    source_caption = (
+        "Source: " + " · ".join(source_citations[:8])
+        if source_citations
+        else "Source: no uploaded material; using the entered topic"
+    )
+
+    def generate_structured_json(prompt: str) -> str:
+        response = client.models.generate_content(
+            model=GENERATION_MODEL,
+            contents=prompt,
+            config={"response_mime_type": "application/json"},
+        )
+        return response.text
+
+    if st.button("Generate structured visuals", type="primary", key="generate_visual_resources"):
+        if not visual_topic.strip():
+            st.warning("Enter a topic first.")
+        else:
+            selected_items = visual_items
+            if detail_level == "Simplify":
+                selected_items = selected_items[:6]
+
+            with st.spinner("Building validated visual structures…"):
+                concept = build_visual(
+                    "concept",
+                    visual_topic,
+                    selected_items,
+                    llm_generate=generate_structured_json,
+                )
+                flow = build_visual(
+                    "flow",
+                    visual_topic,
+                    selected_items,
+                    llm_generate=generate_structured_json,
+                )
+                revision = build_visual(
+                    "revision",
+                    visual_topic,
+                    selected_items,
+                    llm_generate=generate_structured_json,
+                )
+                storyboard = build_visual(
+                    "storyboard",
+                    visual_topic,
+                    selected_items,
+                    llm_generate=generate_structured_json,
+                )
+
+            st.session_state.visual_structures = {
+                "topic": visual_topic,
+                "concept": concept,
+                "flow": flow,
+                "revision": revision,
+                "storyboard": storyboard,
+                "source_caption": source_caption,
+            }
+            st.success("Four source-grounded visual formats are ready.")
+
+    visual_structures = st.session_state.get("visual_structures")
+    if isinstance(visual_structures, dict):
+        topic = visual_structures["topic"]
+        source_caption = visual_structures["source_caption"]
+
+        concept_svg = render_concept_map(
+            visual_structures["concept"],
+            topic,
+            source_caption,
+        )
+        flow_svg = render_flowchart(
+            visual_structures["flow"],
+            f"{topic} · Process",
+            source_caption,
+        )
+        revision_svg = render_revision_sheet(
+            visual_structures["revision"],
+            source_caption,
+        )
+        storyboard_svg = render_storyboard_svg(
+            topic,
+            visual_structures["storyboard"]["scenes"],
+            source_caption,
+        )
+
+        visual_tabs = st.tabs([
+            "Concept map",
+            "Flowchart",
+            "Revision sheet",
+            "Lesson storyboard",
+        ])
+        rendered_visuals = [
+            ("concept_map", concept_svg),
+            ("flowchart", flow_svg),
+            ("revision_sheet", revision_svg),
+            ("lesson_storyboard", storyboard_svg),
+        ]
+        for tab, (name, svg) in zip(visual_tabs, rendered_visuals):
+            with tab:
+                st.markdown(
+                    '<div style="width:100%;overflow:auto">'
+                    + svg
+                    + "</div>",
+                    unsafe_allow_html=True,
+                )
+                download_col1, download_col2 = st.columns(2)
+                with download_col1:
+                    st.download_button(
+                        "Download SVG",
+                        svg.encode("utf-8"),
+                        file_name=f"{topic}_{name}.svg",
+                        mime="image/svg+xml",
+                        key=f"visual_svg_{name}",
+                    )
+                with download_col2:
+                    try:
+                        import cairosvg
+                        png = cairosvg.svg2png(bytestring=svg.encode("utf-8"))
+                        st.download_button(
+                            "Download PNG",
+                            png,
+                            file_name=f"{topic}_{name}.png",
+                            mime="image/png",
+                            key=f"visual_png_{name}",
+                        )
+                    except Exception:
+                        st.caption("PNG export is unavailable; SVG download is ready.")
+
 # ===================================================
 # TAB 1 - PDF RAG
 # ===================================================
@@ -4799,8 +5117,10 @@ with tab1:
             or st.session_state.document_signature != signature
         ):
 
-            with st.spinner("Indexing learning materials…"):
+            with st.status("Processing PDF learning materials", expanded=True) as status:
                 try:
+                    status.update(label="Uploaded · checking PDF files", state="running")
+                    status.write("Uploaded")
                     chunks, full_text, file_infos = extract_pdf_chunks(uploaded_data)
 
                     if not chunks:
@@ -4809,13 +5129,24 @@ with tab1:
                             "found in the PDFs."
                         )
 
+                    status.write("Parsed")
+                    status.write("Extracted")
+                    status.write("Cleaned")
+                    status.write("Chunked")
                     embeddings = create_embeddings(chunks)
+                    status.write("Embedded")
 
                     st.session_state.document_signature = signature
                     st.session_state.chunks = chunks
                     st.session_state.embeddings = embeddings
                     st.session_state.full_text = full_text
                     st.session_state.file_infos = file_infos
+                    st.session_state.pdf_extraction_reports = [
+                        build_pdf_report(file_name, file_bytes)
+                        for file_name, file_bytes in uploaded_data
+                    ]
+                    st.session_state.pdf_report_signature = signature
+                    status.update(label="PDF processing ready", state="complete")
 
                 except Exception as e:
 
@@ -4862,6 +5193,9 @@ with tab1:
                 f"Embeddings ready ({embeddings.shape[1]}-d)"
             ])
 
+            for report in st.session_state.get("pdf_extraction_reports", []):
+                render_pdf_report(report, location="upload")
+
             with st.expander("📑 Indexed files and extracted text"):
 
                 for info in file_infos:
@@ -4872,8 +5206,8 @@ with tab1:
                 if pdf_figure_count:
                     st.caption(
                         f"🖼️ {pdf_figure_count} embedded figure(s) "
-                        "extracted (max 2 per page); they are sent to "
-                        "Gemini when their page is retrieved."
+                        "extracted (max 2 per page); local text inference "
+                        "does not interpret embedded figures."
                     )
 
                 st.text_area(
@@ -4929,7 +5263,7 @@ The student asked a question about uploaded learning
 materials.
 
 You have been given only the most relevant sections
-retrieved by a semantic search system.
+retrieved by a local lexical search system.
 
 IMPORTANT RULES:
 
@@ -4938,13 +5272,14 @@ IMPORTANT RULES:
 3. If the answer cannot be determined from these sources,
    clearly say that the information was not found in the
    uploaded learning material.
-4. Explain the answer clearly as a tutor.
+4. Answer in 1-3 direct sentences; do not greet the student,
+   add an analogy, or invent an example.
 5. Answer in the same language as the student's question.
-6. Cite the source at the relevant part of the answer using:
+6. Cite source(s) from the retrieved material using:
 
    [File name, Page X]
 
-7. Do not invent page numbers or sources.
+7. Do not invent page numbers, sources, or facts.
 
 RETRIEVED SOURCES:
 
@@ -4955,29 +5290,44 @@ STUDENT QUESTION:
 {question}
 """
 
-                        # Figures from the retrieved pages
-                        # (max 2 per page, each page once).
-                        pdf_contents = [prompt]
-
-                        pdf_contents.extend(
-                            collect_source_image_parts(
-                                retrieved_chunks,
-                                source_types=("pdf",),
-                                max_per_source=2
+                        if (
+                            not retrieved_chunks
+                            or retrieved_chunks[0]["score"]
+                            < MINIMUM_RETRIEVAL_SCORE
+                        ):
+                            response = SimpleNamespace(
+                                text=REFUSAL_MESSAGE
                             )
+                        else:
+                            # The local text model receives extracted text only.
+                            pdf_contents = [prompt]
+                            pdf_contents.extend(
+                                collect_source_image_parts(
+                                    retrieved_chunks,
+                                    source_types=("pdf",),
+                                    max_per_source=2
+                                )
+                            )
+
+                            with st.spinner("Generating grounded answer…"):
+                                response = client.models.generate_content(
+                                    model=GENERATION_MODEL,
+                                    contents=pdf_contents
+                                )
+
+                        pdf_answer = ensure_retrieved_citations(
+                            response.text,
+                            [
+                                f"[{chunk['file']}, Page {chunk['page']}]"
+                                for chunk in retrieved_chunks
+                            ]
                         )
-
-                        with st.spinner("Generating grounded answer…"):
-                            response = client.models.generate_content(
-                                model=GENERATION_MODEL,
-                                contents=pdf_contents
-                            )
 
                         with st.container(key="card_pdf_answer"):
 
                             eyebrow_label("Answer")
 
-                            st.write(response.text)
+                            st.write(pdf_answer)
 
                         eyebrow_label("Sources used")
 
@@ -5003,7 +5353,7 @@ STUDENT QUESTION:
                     except Exception as e:
                         st.error(f"An error occurred: {describe_api_error(e)}")
 
-    else:
+    elif not st.session_state.get("demo_files_loaded"):
 
         st.info(
             "No PDF uploaded yet. Drop one or more PDFs above — "
@@ -5032,9 +5382,14 @@ with tab2:
 
     section_header(
         "🖼️ Image Understanding",
-        "Upload a diagram, chart, handwritten note or screenshot "
-        "and ask LearnLens about it.",
+        "Ask questions with an Ollama vision model running on this computer. "
+        "Images are never sent to an external service.",
         eyebrow="Learning materials"
+    )
+    st.caption(
+        "Configured local vision model: "
+        + os.getenv("LEARNLENS_OLLAMA_VISION_MODEL", "llava:7b")
+        + ". Install it with Ollama before asking an image question."
     )
 
     with st.container(key="card_upload_image"):
@@ -5047,6 +5402,46 @@ with tab2:
         )
 
     if uploaded_image:
+
+        image_signature = hashlib.sha256(uploaded_image.getvalue()).hexdigest()
+        cached_report = st.session_state.get("image_extraction_report")
+        if (
+            not isinstance(cached_report, dict)
+            or cached_report.get("signature") != image_signature
+        ):
+            try:
+                with st.status("Processing image", expanded=True) as status:
+                    status.write("Uploaded")
+                    status.write("Parsed")
+                    status.write("Extracted")
+                    try:
+                        image_caption = LOCAL_AI.generate_with_image(
+                            "Describe this educational image in 1-3 sentences. "
+                            "Identify the topic, visible labels, and whether it "
+                            "shows a diagram, chart, table or general image.",
+                            uploaded_image.getvalue(),
+                            uploaded_image.type or "application/octet-stream",
+                        )
+                    except Exception:
+                        image_caption = "Local vision caption unavailable."
+                    status.write("Cleaned")
+                    status.write("Chunked · not applicable for direct image Q&A")
+                    status.write("Embedded · not applicable for direct image Q&A")
+                    report = build_image_report(
+                        uploaded_image.name,
+                        uploaded_image.getvalue(),
+                        uploaded_image.type or "application/octet-stream",
+                        caption=image_caption,
+                    )
+                    report["signature"] = image_signature
+                    st.session_state.image_extraction_report = report
+                    status.update(label="Image processing ready", state="complete")
+            except Exception as error:
+                st.error(f"Image extraction failed: {describe_api_error(error)}")
+
+        report = st.session_state.get("image_extraction_report")
+        if isinstance(report, dict):
+            render_image_report(report, uploaded_image.getvalue())
 
         image_col, ask_col = st.columns([1, 1], gap="large")
 
@@ -5216,7 +5611,7 @@ with tab3:
             "Topic or scope (optional)",
             placeholder=(
                 "Example: Pandas, clustering, "
-                "Minkowski distance..."
+                "distance measures..."
             ),
             key="assessment_topic"
         )
@@ -5891,6 +6286,28 @@ with tab4:
             "Learning goal: " + str(learner_profile["goal"])
         )
 
+    recovery_items, _recovery_vectors = build_unified_knowledge_base()
+    recovery_graph = build_knowledge_graph(recovery_items)
+    recovery_plan = build_recovery_plan(
+        topic_results,
+        graph=recovery_graph
+    )
+    if recovery_plan:
+        with st.expander("🛠️ Learning Recovery Plan", expanded=True):
+            st.caption(
+                "A local, evidence-based sequence for topics currently "
+                "below the review threshold."
+            )
+            for step_number, recovery_step in enumerate(
+                recovery_plan,
+                start=1
+            ):
+                st.markdown(
+                    f"**{step_number}. {recovery_step['topic']}** "
+                    f"({recovery_step['accuracy']:.0f}% accuracy)"
+                )
+                st.write(recovery_step["step"])
+
     st.divider()
 
     if not total_questions:
@@ -6200,8 +6617,8 @@ with tab5:
 
     section_header(
         "🎞️ Video Learning Materials",
-        "Upload a lecture recording. Gemini splits it into "
-        "timestamped segments that the tutor can cite.",
+        "Transcribe lecture videos locally with Faster-Whisper and ask "
+        "grounded questions using timestamped transcript segments.",
         eyebrow="Step 2 · Learning materials"
     )
 
@@ -6250,8 +6667,7 @@ with tab5:
             and video_failure.get("name") == uploaded_video.name
         ):
 
-            # Do not call Gemini again on every rerun after a
-            # failure; retry only on request.
+            # Do not repeat processing after a failure; retry only on request.
             st.error(
                 "Video could not be added to the knowledge base: "
                 + video_failure.get("message", "")
@@ -6268,20 +6684,20 @@ with tab5:
 
             try:
 
-                with st.spinner(
-                    "Building semantic knowledge base from video…"
-                ):
-
-                    video_ref = upload_video_to_gemini(
+                with st.status("Processing video", expanded=True) as status:
+                    status.write("Uploaded")
+                    video_ref = prepare_local_video(
                         uploaded_video
                     )
+                    status.write("Parsed")
 
                     if (
                         "video_chunks" not in st.session_state
                         or st.session_state.get("video_kb_name")
                         != uploaded_video.name
                     ):
-
+                        status.write("Extracted")
+                        status.write("Cleaned")
                         video_chunks = (
                             create_video_knowledge_chunks(
                                 video_ref,
@@ -6291,8 +6707,8 @@ with tab5:
 
                         if not video_chunks:
                             raise ValueError(
-                                "Gemini returned no usable "
-                                "video segments."
+                                "The local video processor returned no usable "
+                                "segments."
                             )
 
                         video_embeddings = (
@@ -6300,6 +6716,8 @@ with tab5:
                                 video_chunks
                             )
                         )
+                        status.write("Chunked")
+                        status.write("Embedded")
 
                         st.session_state.video_chunks = (
                             video_chunks
@@ -6312,6 +6730,17 @@ with tab5:
                         st.session_state.video_kb_name = (
                             uploaded_video.name
                         )
+                        st.session_state.video_extraction_report = (
+                            build_video_extraction_report(
+                                video_ref,
+                                uploaded_video.name,
+                                video_chunks,
+                            )
+                        )
+                        st.session_state.video_extraction_report["bytes"] = (
+                            uploaded_video.getvalue()
+                        )
+                        status.update(label="Video processing ready", state="complete")
 
                         st.rerun()
 
@@ -6322,12 +6751,22 @@ with tab5:
                 ):
 
                     status_badges([
-                        "Video processed by Gemini",
+                        "Video processed locally",
                         f"{len(st.session_state.video_chunks)} "
                         "timestamped segments",
                         "Embeddings ready",
                         "Added to shared knowledge base"
                     ])
+
+                    video_report = st.session_state.get(
+                        "video_extraction_report"
+                    )
+                    if isinstance(video_report, dict):
+                        render_video_report(
+                            video_report,
+                            uploaded_video.getvalue(),
+                            location="upload",
+                        )
 
                     with st.expander("🎬 Timestamped segments"):
 
@@ -6420,11 +6859,11 @@ with tab5:
                         f"Video analysis failed: {describe_api_error(e)}"
                     )
 
-    else:
+    elif not st.session_state.get("demo_files_loaded"):
 
         st.info(
-            "No video uploaded yet. Short lecture clips work best; "
-            "processing uses Gemini and can take a minute."
+            "Upload a lecture video. Transcription runs locally and may take "
+            "a few minutes on CPU."
         )
 
         # Uploader emptied: remove the video part of the
@@ -6433,9 +6872,17 @@ with tab5:
             "video_chunks",
             "video_embeddings",
             "video_kb_name",
-            "video_kb_failure"
+            "video_kb_failure",
+            "video_file_path",
+            "video_signature"
         ):
-            st.session_state.pop(stale_key, None)
+            stale_value = st.session_state.pop(stale_key, None)
+            if (
+                stale_key == "video_file_path"
+                and stale_value
+                and os.path.exists(stale_value)
+            ):
+                os.remove(stale_value)
 
 # ===================================================
 # TAB 6 - SLIDE UNDERSTANDING
@@ -6497,11 +6944,8 @@ with tab6:
         ):
 
             try:
-
-                with st.spinner(
-                    "Indexing learning materials…"
-                ):
-
+                with st.status("Processing PowerPoint presentation", expanded=True) as status:
+                    status.write("Uploaded")
                     slide_chunks = (
                         extract_pptx_slides(
                             uploaded_pptx.name,
@@ -6514,11 +6958,16 @@ with tab6:
                             "The presentation contains no slides."
                         )
 
+                    status.write("Parsed")
+                    status.write("Extracted")
+                    status.write("Cleaned")
+                    status.write("Chunked")
                     slide_embeddings = (
                         create_embeddings(
                             slide_chunks
                         )
                     )
+                    status.write("Embedded")
 
                     st.session_state.pptx_signature = (
                         pptx_signature
@@ -6531,6 +6980,11 @@ with tab6:
                     st.session_state.slide_embeddings = (
                         slide_embeddings
                     )
+                    st.session_state.pptx_extraction_report = build_pptx_report(
+                        uploaded_pptx.name,
+                        pptx_bytes,
+                    )
+                    status.update(label="PowerPoint processing ready", state="complete")
 
                     st.rerun()
 
@@ -6577,6 +7031,14 @@ with tab6:
                 f"{image_count} embedded image(s)",
                 "Embeddings ready"
             ])
+
+            render_pptx_report(
+                st.session_state.get(
+                    "pptx_extraction_report",
+                    build_pptx_report(uploaded_pptx.name, pptx_bytes),
+                ),
+                location="upload",
+            )
 
             with st.expander(
                 "📑 View extracted slide content"
@@ -6685,11 +7147,11 @@ with tab6:
                             f"Slide analysis failed: {describe_api_error(e)}"
                         )
 
-    else:
+    elif not st.session_state.get("demo_files_loaded"):
 
         st.info(
-            "No slides uploaded yet. Upload a .pptx deck — for the "
-            "benchmark demo use Kümeleme.pptx."
+            "No slides uploaded yet. Upload a .pptx deck. "
+            "The included benchmark demo uses Clustering_Lecture.pptx."
         )
 
         # Uploader emptied: remove the slide part of the
@@ -6801,12 +7263,60 @@ with tab7:
             )
 
             with question_col:
+                tutor_topics = list(dict.fromkeys(
+                    str(item.get("topic", "")).strip()
+                    or str(item.get("subtopic", "")).strip()
+                    for item in unified_items
+                    if str(item.get("topic", "")).strip()
+                    or str(item.get("subtopic", "")).strip()
+                ))[:3]
+                tutor_topic_text = tutor_topics[0] if tutor_topics else "your material"
+                tutor_placeholder = f"Ask about {tutor_topic_text}, an example, or a key definition..."
 
                 question = st.text_input(
                     "Ask LearnLens a question:",
-                    placeholder="e.g. Minkowski uzaklığı nedir?",
+                    placeholder=tutor_placeholder,
                     key="unified_question"
                 )
+
+                suggested_questions = list(
+                    st.session_state.get("demo_questions", [])
+                )
+                if not suggested_questions:
+                    suggested_questions = []
+                    for topic in tutor_topics[:3]:
+                        suggested_questions.append(
+                            f"What are the key ideas about {topic}?"
+                        )
+                        suggested_questions.append(
+                            f"Give me an example of {topic}."
+                        )
+                if suggested_questions:
+                    st.caption("Suggested questions")
+                    for row_start in range(0, len(suggested_questions), 3):
+                        row = suggested_questions[
+                            row_start:row_start + 3
+                        ]
+                        suggestion_cols = st.columns(len(row))
+                        for suggestion_index, (col, suggestion) in enumerate(
+                            zip(suggestion_cols, row)
+                        ):
+                            def select_suggested_question(
+                                selected_question=suggestion,
+                            ):
+                                st.session_state[
+                                    "unified_question"
+                                ] = selected_question
+
+                            col.button(
+                                suggestion,
+                                key=(
+                                    "suggested_question_"
+                                    f"{row_start + suggestion_index}"
+                                ),
+                                use_container_width=True,
+                                on_click=select_suggested_question,
+                            )
 
             with scope_col:
 
@@ -7046,13 +7556,20 @@ with tab7:
                         # ---------------------------
 
                         eyebrow_label("Sources used")
-
-                        st.caption(
-                            " · ".join(
-                                source["citation"]
-                                for source in retrieved_sources
-                            )
+                        citation_cols = st.columns(
+                            min(4, max(1, len(retrieved_sources)))
                         )
+                        for col, source in zip(citation_cols, retrieved_sources):
+                            if col.button(
+                                source["citation"],
+                                key=f"source_chip_{source['citation']}",
+                                use_container_width=True,
+                            ):
+                                st.session_state.requested_source_citation = (
+                                    source["citation"]
+                                )
+                                st.session_state.review_requested = True
+                                st.rerun()
 
                         with st.expander(
                             f"📚 Retrieved passages ({len(retrieved_sources)})"
@@ -7142,7 +7659,7 @@ with tab7:
             st.caption(
                 "Each unit gets a topic, subtopic, key concepts and "
                 "prerequisites. Tags are generated in batches of "
-                f"{KNOWLEDGE_TAG_BATCH_SIZE} units per Gemini call and "
+                f"{KNOWLEDGE_TAG_BATCH_SIZE} units per local model call and "
                 "cached in knowledge_tags.json — cached units are never "
                 "re-tagged."
             )
@@ -7154,8 +7671,8 @@ with tab7:
                 help=(
                     "When on, the tutor and the assessment tag only "
                     "the few untagged units they actually use (at "
-                    "most one batched Gemini call). Turn off to save "
-                    "API quota; tagging then happens only via the "
+                    "most one batched local-model call). Turn off to save "
+                    "local processing time; tagging then happens only via the "
                     "button below."
                 )
             )
@@ -7224,6 +7741,45 @@ with tab7:
                 )
 
             else:
+
+                graph = build_knowledge_graph(structure_items)
+                graph_col1, graph_col2 = st.columns(2)
+                with graph_col1:
+                    st.metric("Graph nodes", len(graph["nodes"]))
+                with graph_col2:
+                    st.metric("Graph relationships", len(graph["edges"]))
+
+                with st.expander("View prerequisite and concept relationships"):
+                    if graph["edges"]:
+                        st.dataframe(
+                            [
+                                {
+                                    "From": next(
+                                        node["label"]
+                                        for node in graph["nodes"]
+                                        if node["id"] == edge["source"]
+                                    ),
+                                    "Relationship": edge["relation"],
+                                    "To": next(
+                                        node["label"]
+                                        for node in graph["nodes"]
+                                        if node["id"] == edge["target"]
+                                    ),
+                                }
+                                for edge in graph["edges"]
+                            ],
+                            hide_index=True,
+                            use_container_width=True
+                        )
+                    else:
+                        st.caption("No concept relationships are tagged yet.")
+                st.download_button(
+                    "Download knowledge graph JSON",
+                    data=json.dumps(graph, ensure_ascii=False, indent=2),
+                    file_name="learnlens_knowledge_graph.json",
+                    mime="application/json",
+                    key="download_knowledge_graph"
+                )
 
                 selected_structure_topic = st.selectbox(
                     "Browse a topic",
@@ -7565,6 +8121,7 @@ with tab8:
             st.session_state.diagnostic_score = 0
             st.session_state.diagnostic_answered = False
             st.session_state.diagnostic_result_applied = False
+            st.session_state.fallback_correct_answers = set()
 
             diagnostic_topic = (
                 st.session_state.learner_profile.get(
@@ -7962,6 +8519,7 @@ with tab8:
                         st.session_state.diagnostic_answered = False
                         st.session_state.diagnostic_last_correct = False
                         st.session_state.diagnostic_result_applied = False
+                        st.session_state.fallback_correct_answers = set()
 
                         st.session_state.learner_profile[
                             "diagnostic_completed"
@@ -7983,6 +8541,65 @@ with tab9:
         "evidence, answers faithfully and refuses unsupported questions.",
         eyebrow="Step 7 · Evidence"
     )
+
+    readiness = assess_sequence_readiness(
+        st.session_state.get("quiz_history", [])
+    )
+    with st.expander("🧠 Local sequence-model readiness", expanded=False):
+        st.caption(
+            "DNN/LSTM experiments stay disabled until the learner has "
+            "enough labeled history; this avoids misleading results."
+        )
+        readiness_col1, readiness_col2 = st.columns(2)
+        with readiness_col1:
+            st.metric("Labeled observations", readiness["samples"])
+        with readiness_col2:
+            st.metric("Distinct topics", readiness["topics"])
+        if readiness["ready"]:
+            st.success("The dataset is large enough for an experiment.")
+            if st.button(
+                "Run local LSTM experiment",
+                key="run_lstm_experiment"
+            ):
+                with st.spinner("Training a small local LSTM…"):
+                    experiment = run_lstm_experiment(
+                        st.session_state.get("quiz_history", [])
+                    )
+                st.session_state.lstm_experiment = experiment
+            if st.button(
+                "Run local DNN baseline",
+                key="run_dnn_experiment"
+            ):
+                with st.spinner("Training a small local DNN…"):
+                    st.session_state.dnn_experiment = (
+                        run_dnn_experiment(
+                            st.session_state.get("quiz_history", [])
+                        )
+                    )
+        else:
+            st.info(" ".join(readiness["reasons"]))
+        if st.session_state.get("lstm_experiment"):
+            experiment = st.session_state.lstm_experiment
+            if experiment.get("ready"):
+                st.write(
+                    f"Next-answer correctness estimate: "
+                    f"{experiment['next_correct_probability']:.0%}"
+                )
+                st.caption(
+                    f"CPU experiment · loss {experiment['final_loss']} · "
+                    f"{experiment['epochs']} epochs"
+                )
+        if st.session_state.get("dnn_experiment"):
+            experiment = st.session_state.dnn_experiment
+            if experiment.get("ready"):
+                st.write(
+                    f"DNN next-answer estimate: "
+                    f"{experiment['next_correct_probability']:.0%}"
+                )
+                st.caption(
+                    f"CPU baseline · loss {experiment['final_loss']} · "
+                    f"{experiment['epochs']} epochs"
+                )
 
     with st.container(key="card_metric_guide"):
 
@@ -8023,8 +8640,8 @@ with tab9:
 
     section_header(
         "Real system metrics",
-        "Measured on your uploaded learning materials with live "
-        "Gemini calls.",
+        "Measured on your uploaded learning materials with local "
+        "model inference.",
         eyebrow="Measured"
     )
 
@@ -8035,9 +8652,9 @@ with tab9:
     if not evaluation_items:
 
         st.info(
-            "No learning materials yet. Upload materials first — "
-            "for the benchmark test set, upload Kümeleme.pptx in "
-            "📽️ Slide Understanding."
+            "No learning materials yet. Upload materials first. "
+            "For the benchmark test set, upload "
+            "Clustering_Lecture.pptx in the Slide Understanding area."
         )
 
     else:
@@ -8075,7 +8692,7 @@ with tab9:
         evaluation_question = st.text_input(
             "Test question",
             placeholder=(
-                "Example: Minkowski uzaklığı nedir?"
+                "Example: What is the Minkowski distance?"
             ),
             key="evaluation_question"
         )
@@ -8394,9 +9011,9 @@ with tab9:
                 key="benchmark_mode",
                 help=(
                     "Quick: 1 off-material case + first 2 "
-                    "in-material cases (quota-safe). Full: every "
-                    "case in evaluation_testset.json. RAGAS makes "
-                    "several Gemini calls per case."
+                    "in-material cases. Full: every case in "
+                    "evaluation_testset.json. RAGAS makes several "
+                    "local model calls per in-material case."
                 )
             )
 
@@ -8551,8 +9168,8 @@ with tab9:
 
                         if benchmark_summary["quota_exhausted"]:
                             final_progress_text = (
-                                "Benchmark stopped — Gemini API "
-                                "quota reached."
+                                "Benchmark stopped — local model "
+                                "resource limit reached."
                             )
                         else:
                             final_progress_text = (
@@ -8563,8 +9180,8 @@ with tab9:
                     elif benchmark_summary["quota_exhausted"]:
 
                         final_progress_text = (
-                            "Benchmark stopped early — Gemini API "
-                            "quota reached (partial results)."
+                            "Benchmark stopped early — local model "
+                            "resource limit reached (partial results)."
                         )
 
                     else:
@@ -8654,8 +9271,8 @@ with tab9:
 
                     if report_quota_exhausted:
                         st.error(
-                            "Benchmark stopped — Gemini API quota "
-                            "reached. No valid scores were produced. "
+                            "Benchmark stopped — the local model could not "
+                            "complete a case. No valid scores were produced. "
                             + QUOTA_ERROR_MESSAGE
                         )
                     else:
@@ -8667,7 +9284,8 @@ with tab9:
                 elif report_quota_exhausted:
 
                     st.warning(
-                        "Partial benchmark: Gemini API quota was reached. "
+                        "Partial benchmark: local model resource limits "
+                        "stopped the run. "
                         f"Scores below are based on only "
                         f"{report_successful_cases} successful case(s)."
                     )
@@ -8931,8 +9549,161 @@ with tab9:
 # ===================================================
 
 with st.sidebar:
+    render_mode_selector(client)
+    st.divider()
+    st.markdown("### Learning Session")
 
-    st.markdown("### 🎓 Learning Session")
+    if st.button(
+        "Load demo files",
+        type="primary",
+        width="stretch",
+        key="load_demo_files",
+    ):
+        demo_dir = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "samples",
+            "demo",
+        )
+        try:
+            with st.status("Loading demo bundle", expanded=True) as demo_status:
+                pdf_path = os.path.join(demo_dir, "hierarchical_clustering.pdf")
+                pdf_bytes = open(pdf_path, "rb").read()
+                pdf_signature = create_file_signature([
+                    ("hierarchical_clustering.pdf", pdf_bytes)
+                ])
+                demo_status.write("Uploaded · 4 demo files")
+                pdf_chunks, pdf_text, pdf_infos = extract_pdf_chunks([
+                    ("hierarchical_clustering.pdf", pdf_bytes)
+                ])
+                pdf_embeddings = create_embeddings(pdf_chunks)
+                st.session_state.document_signature = pdf_signature
+                st.session_state.chunks = pdf_chunks
+                st.session_state.embeddings = pdf_embeddings
+                st.session_state.full_text = pdf_text
+                st.session_state.file_infos = pdf_infos
+                st.session_state.pdf_extraction_reports = [
+                    build_pdf_report(
+                        "hierarchical_clustering.pdf",
+                        pdf_bytes,
+                    )
+                ]
+
+                pptx_path = os.path.join(demo_dir, "hierarchical_clustering.pptx")
+                pptx_bytes = open(pptx_path, "rb").read()
+                pptx_signature = hashlib.sha256(pptx_bytes).hexdigest()
+                slide_chunks = extract_pptx_slides(
+                    "hierarchical_clustering.pptx",
+                    pptx_bytes,
+                )
+                slide_embeddings = create_embeddings(slide_chunks)
+                st.session_state.pptx_signature = pptx_signature
+                st.session_state.slide_chunks = slide_chunks
+                st.session_state.slide_embeddings = slide_embeddings
+                st.session_state.pptx_extraction_report = build_pptx_report(
+                    "hierarchical_clustering.pptx",
+                    pptx_bytes,
+                )
+
+                image_path = os.path.join(
+                    demo_dir,
+                    "hierarchical_clustering_dendrogram.png",
+                )
+                image_bytes = open(image_path, "rb").read()
+                image_signature = hashlib.sha256(image_bytes).hexdigest()
+                st.session_state.image_extraction_report = {
+                    **build_image_report(
+                        "hierarchical_clustering_dendrogram.png",
+                        image_bytes,
+                        "image/png",
+                        caption="A synthetic dendrogram showing hierarchical cluster merges.",
+                    ),
+                    "signature": image_signature,
+                }
+
+                video_path = os.path.join(demo_dir, "hierarchical_clustering.mp4")
+                video_bytes = open(video_path, "rb").read()
+                demo_status.write("Parsed · PDF, PPTX, image and video")
+                demo_status.write("Extracted · text and transcript sources")
+                demo_status.write("Chunked · PDF, slide and transcript units")
+
+                video_signature = create_file_signature([
+                    ("hierarchical_clustering.mp4", video_bytes)
+                ])
+                temp_video = tempfile.NamedTemporaryFile(
+                    suffix=".mp4",
+                    delete=False,
+                )
+                temp_video.write(video_bytes)
+                temp_video.close()
+                st.session_state.video_signature = video_signature
+                st.session_state.video_file_path = temp_video.name
+                video_chunks = create_video_knowledge_chunks(
+                    temp_video.name,
+                    "hierarchical_clustering.mp4",
+                )
+                if video_chunks:
+                    video_embeddings = create_embeddings(video_chunks)
+                    st.session_state.video_chunks = video_chunks
+                    st.session_state.video_embeddings = video_embeddings
+                    st.session_state.video_kb_name = "hierarchical_clustering.mp4"
+                    st.session_state.video_extraction_report = (
+                        build_video_extraction_report(
+                            temp_video.name,
+                            "hierarchical_clustering.mp4",
+                            video_chunks,
+                        )
+                    )
+                    st.session_state.video_extraction_report["bytes"] = video_bytes
+
+                st.session_state.demo_files_loaded = True
+                questions_path = os.path.join(demo_dir, "questions.json")
+                st.session_state.demo_questions = json.loads(
+                    open(questions_path, "r", encoding="utf-8").read()
+                )
+
+                demo_topic = "Hierarchical Clustering"
+                demo_points = [
+                    "Distance between clusters",
+                    "Agglomerative merging",
+                    "Single linkage",
+                    "Complete linkage",
+                    "Dendrogram interpretation",
+                ]
+                st.session_state.visual_structures = {
+                    "topic": demo_topic,
+                    "concept": build_visual(
+                        "concept",
+                        demo_topic,
+                        demo_points,
+                    ),
+                    "flow": build_visual(
+                        "flow",
+                        demo_topic,
+                        demo_points,
+                    ),
+                    "revision": build_visual(
+                        "revision",
+                        demo_topic,
+                        demo_points,
+                    ),
+                    "storyboard": build_visual(
+                        "storyboard",
+                        demo_topic,
+                        demo_points,
+                    ),
+                    "source_caption": "Source: demo PDF, PPTX, image and 1:48 video",
+                }
+
+                demo_status.update(
+                    label="Demo bundle ready",
+                    state="complete",
+                )
+            st.rerun()
+        except Exception as demo_error:
+            st.error(
+                "The demo bundle could not be loaded: "
+                + describe_api_error(demo_error)
+            )
 
     status_items, _ = build_unified_knowledge_base()
 
@@ -9051,3 +9822,10 @@ with st.sidebar:
         "Topics tracked in learner model: "
         f"{len(st.session_state.get('learner_mastery', {}))}"
     )
+
+    if st.button("Reset session", key="reset_session", width="stretch"):
+        keep = {"persistent_state_loaded"}
+        for key in list(st.session_state.keys()):
+            if key not in keep:
+                del st.session_state[key]
+        st.rerun()

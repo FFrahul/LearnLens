@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <b>A multimodal, source-grounded AI tutor that learns from your own course material — PDFs, slides and lecture videos — adapts its questions to you, and refuses to make things up.</b>
+  <b>A local-first, source-grounded AI tutor for PDF and slide text that adapts practice and refuses unsupported answers.</b>
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
 <p align="center">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white">
   <img alt="Streamlit" src="https://img.shields.io/badge/Streamlit-UI-FF4B4B?logo=streamlit&logoColor=white">
-  <img alt="Google Gemini" src="https://img.shields.io/badge/Google%20Gemini-API-8E75B2?logo=googlegemini&logoColor=white">
+  <img alt="Ollama local inference" src="https://img.shields.io/badge/Ollama-local%20inference-111827?logo=ollama&logoColor=white">
   <img alt="RAGAS" src="https://img.shields.io/badge/RAGAS-0.4.3-0F172A">
   <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-22C55E">
 </p>
@@ -40,6 +40,11 @@
 
 ---
 
+> **Local-only implementation status:** tutoring, text extraction, lexical
+> retrieval, video transcription and optional image understanding run locally
+> through Ollama and Faster-Whisper. See [Known limitations](#known-limitations)
+> for model requirements.
+
 ## Problem
 
 Students study from a mix of lecture slides, PDF notes and recorded lectures.
@@ -51,36 +56,75 @@ student improves.
 
 ## Solution
 
-LearnLens AI turns a student's own material into one searchable multimodal
-knowledge base and builds a tutor around it:
+The local-only LearnLens build currently indexes PDF and PowerPoint text and
+builds a tutor around that material:
 
-- **Grounded answers** with exact citations — `[file.pdf, Page 3]`,
-  `[deck.pptx, Slide 7]`, `[lecture.mp4, 02:10 - 03:05]`.
+- **Grounded answers** with page and slide citations — `[file.pdf, Page 3]`,
+  `[deck.pptx, Slide 7]`.
 - **Honest refusal** when the material does not contain the answer:
   *"Bu bilgi yüklenen ders materyallerinde bulunamadı."*
 - **Adaptive, verified assessments** (MCQ, short answer, numerical) whose
   difficulty follows the student's performance.
 - **A learner model** that tracks mastery per topic from quizzes, the diagnostic
   and tutoring conversations, and uses it to personalize explanations.
-- **Built-in evaluation**: RAGAS metrics, a team-built benchmark, refusal accuracy,
-  citation matching and question repetition rate.
+- **Built-in evaluation**: a local-model RAGAS judge, a team-built benchmark,
+  refusal accuracy, citation matching and question repetition rate.
 
 ## Why LearnLens AI is different
 
-- **One knowledge base for all modalities.** PDF pages (including embedded
-  figures), slides (text, tables, images) and timestamped video segments are
-  retrieved together, so one answer can cite a slide and a video timestamp.
+- **Hybrid local knowledge base.** PDF page text, PowerPoint text/tables and
+  timestamped video transcripts are indexed locally. Embedded figures and
+  uploaded images are not interpreted in this build.
+- **Hybrid retrieval.** BM25-style lexical matching is combined with the
+  deterministic local vector score so exact course terms remain discoverable
+  even without downloading a semantic embedding model.
 - **Grounding is enforced and measured.** Strict prompts, citation preservation,
   a fixed refusal sentence, and a benchmark that checks refusals and expected
   sources.
-- **Questions are checked twice.** A second Gemini pass verifies every generated
+- **Offline tutor workflow.** A planner normalizes the learner question and a
+  verifier rejects insufficient retrieval evidence before the local model is
+  called.
+- **Optional local image Q&A.** If an Ollama vision model is installed, image
+  questions run locally through it; text-only installations receive an
+  actionable setup message.
+- **Honest experiment gating.** Sequence-model experiments are reported as
+  not ready until enough labeled learner history exists; local PyTorch DNN and
+  LSTM results are never shown without sufficient data.
+- **Optional TensorFlow/Keras experiments.** Isolated DNN and LSTM baselines are
+  available only when TensorFlow is explicitly installed. TensorFlow is never
+  imported during ordinary app startup, so existing PyTorch experiments and the
+  rest of LearnLens continue to work without it.
+- **Questions are checked twice.** A second local-model pass verifies every generated
   question against the source and rejects anything ambiguous, unsupported or not
   self-contained (including questions that would need a figure the student
   cannot see).
 - **Transparent learner model.** A simple exponential moving average per topic,
   documented constants, no black box.
-- **Quota-aware.** Embeddings and knowledge tags are cached, tagging is batched
-  and need-based, and the benchmark stops cleanly on API quota errors.
+- **Resource-aware.** Retrieval vectors and knowledge tags are cached, tagging
+  is batched and need-based, and the benchmark reports local model errors.
+
+## Guided learning flow
+
+The app uses one four-step workflow:
+
+1. **Upload** — add PDF, PPTX, image or video material.
+2. **Review Extraction** — inspect page, slide, image or timestamp details and
+   the knowledge structure.
+3. **Learn** — ask the grounded tutor or generate inline Visual Studio diagrams.
+4. **Practice** — run assessments, view mastery and use the evaluation tools.
+
+The sidebar provides the AI engine mode, text and vision models, online/offline
+status, compact session metrics and a reset control.
+
+```bash
+# Windows
+.venv\Scripts\python.exe -m streamlit run app.py --server.port 8502
+
+# macOS / Linux
+.venv/bin/python -m streamlit run app.py --server.port 8502
+```
+
+Open http://localhost:8502.
 
 ## Screenshots
 
@@ -107,8 +151,8 @@ knowledge base and builds a tutor around it:
 
 | Track D requirement | LearnLens AI |
 |---|---|
-| Multimodal content understanding | PDF text + figures, PPTX text/tables/images, video segments, image Q&A |
-| Knowledge structure per content unit | Topic, subtopic, key concepts, prerequisites per unit (batched Gemini tagging, cached) |
+| Content understanding | PDF text, PPTX text/tables, video speech and optional image inference are processed locally |
+| Knowledge structure per content unit | Topic, subtopic, key concepts, prerequisites per unit (local Ollama tagging, cached) |
 | Source-grounded tutoring | Retrieval-augmented answers with page / slide / timestamp citations and refusal |
 | Adaptive assessment | MCQ / short answer / numerical, Easy ↔ Medium ↔ Hard adaptation, semantic grading |
 | Question quality | Second-pass verification, self-containment, duplicate prevention, repetition rate |
@@ -117,7 +161,7 @@ knowledge base and builds a tutor around it:
 | Cold start | 3-question diagnostic (Easy → Medium → Hard) |
 | Personalization | Level, goal, explanation style and weak topics injected into the tutor |
 | Persistence | `learner_state.json` across sessions |
-| Evaluation | RAGAS (4 metrics), batch benchmark, refusal accuracy, source match, repetition rate, **synthetic** multi-session profile simulation |
+| Evaluation | RAGAS (local Ollama judge), batch benchmark, refusal accuracy, source match, repetition rate, **synthetic** multi-session profile simulation |
 
 A detailed requirement-by-requirement status is in
 [TRACK_D_STATUS.md](TRACK_D_STATUS.md).
@@ -127,10 +171,10 @@ A detailed requirement-by-requirement status is in
 | Tab | What it does |
 |---|---|
 | 🧭 Learner Profile | Level, learning goal, explanation style; 3-question starting-level diagnostic |
-| 📄 PDF RAG | Upload PDFs; page-level retrieval with figures; cited answers |
-| 📽️ Slide Understanding | Upload PPTX; slide text, tables and embedded images; cited answers |
-| 🎞️ Video Understanding | Upload a lecture video; Gemini builds timestamped knowledge segments |
-| 🖼️ Image Understanding | Ask questions about a diagram, photo or screenshot |
+| 📄 PDF RAG | Upload PDFs; page-level text retrieval and cited answers. Embedded figures are not analyzed locally. |
+| 📽️ Slide Understanding | Upload PPTX; slide text/tables and cited answers. Embedded pictures are not analyzed locally. |
+| 🎞️ Video Understanding | Transcribe videos locally with Faster-Whisper and ask timestamp-cited questions. |
+| 🖼️ Image Understanding | Not available yet: the installed model is text-only. |
 | 🎓 Unified Tutor | Personalized, grounded answers across all uploaded material; Knowledge Structure view |
 | 🧠 Adaptive Assessment | Verified MCQ / short / numerical questions with adaptive difficulty |
 | 📊 Mastery Dashboard | Accuracy, EMA topic mastery, strongest / weakest topic, likely misconceptions |
@@ -140,28 +184,28 @@ A detailed requirement-by-requirement status is in
 
 | Input | Processing | Citation |
 |---|---|---|
-| PDF | PyMuPDF text, chunked per page (1200 chars, 200 overlap); up to 2 embedded figures per page, sent to Gemini when the page is retrieved | `[file.pdf, Page N]` |
-| PowerPoint | python-pptx text frames, tables, embedded pictures (up to 2 per retrieved slide sent to Gemini) | `[file.pptx, Slide N]` |
-| Video | Gemini Files API; Gemini segments the lecture into timestamped topic segments that are embedded like text | `[video.mp4, mm:ss - mm:ss]` |
-| Image | Direct visual question answering with Gemini | — |
+| PDF | PyMuPDF extracts text locally and chunks per page (1200 chars, 200 overlap); figures are retained as metadata but not interpreted | `[file.pdf, Page N]` |
+| PowerPoint | python-pptx extracts text frames and tables locally; embedded pictures are not interpreted | `[file.pptx, Slide N]` |
+| Video | Faster-Whisper transcribes speech locally; transcript segments are retrieved and cited by timestamp | `[video.mp4, MM:SS - MM:SS]` |
+| Image | Ollama vision model performs local visual question answering; requires the configured model to be installed | Local model |
 
 ## Architecture
 
 ```mermaid
 flowchart TB
-    subgraph S1["① Multimodal ingestion"]
+    subgraph S1["① Local text ingestion"]
         direction TB
         PDF["📄 PDF<br/>PyMuPDF text + figures"]
         PPTX["📽️ PPTX<br/>text · tables · images"]
-        VID["🎞️ Video<br/>Gemini Files API →<br/>timestamped segments"]
+        VID["🎞️ Video<br/>Faster-Whisper transcript"]
     end
     subgraph S2["② Unified knowledge base"]
         direction LR
-        EMB["Gemini embeddings<br/>gemini-embedding-2 · 768-d"] --> KB[("Units + citations<br/>+ knowledge tags")]
+        EMB["Local feature hashing<br/>768-d lexical vectors"] --> KB[("Units + citations<br/>+ knowledge tags")]
     end
     subgraph S3["③ Grounded tutoring & assessment"]
         direction LR
-        RET["Cosine retrieval<br/>top-k · scope filter"] --> GEN["Gemini generation<br/>gemini-3.5-flash-lite"]
+        RET["Cosine lexical retrieval<br/>top-k · scope filter"] --> GEN["Ollama local generation<br/>llama3.2:1b"]
         GEN --> ANS["✅ Cited answer<br/>or explicit refusal"]
         GEN --> Q["🧠 Verified adaptive<br/>question + grading"]
     end
@@ -173,18 +217,21 @@ flowchart TB
     S4 -. "level · goal · style · weak topics" .-> S3
 ```
 
-Images are answered directly with Gemini vision in the 🖼️ Image Understanding tab.
-
-Everything runs in one Streamlit app (`app.py`). Gemini is the only AI provider.
+Everything runs in one Streamlit app (`app.py`) with local Ollama inference.
+Retrieval combines deterministic lexical feature hashing with BM25-style
+matching; it is not a hosted semantic embedding service. Video transcription
+uses Faster-Whisper and image understanding uses the configured local Ollama
+vision model.
 
 ## How source-grounded RAG works
 
-1. Each PDF chunk, slide and video segment becomes a **knowledge unit** with a
+1. Each PDF text chunk and slide becomes a **knowledge unit** with a
    fixed citation string.
-2. The question is embedded and the top units are retrieved by cosine similarity
+2. The question is converted to a deterministic local lexical feature vector
+   and the top units are retrieved by cosine similarity
    (optionally limited to PDF / Slides / Video).
-3. Gemini receives only those units (plus up to 2 images per retrieved page or
-   slide) and strict rules: answer only from the material, keep the exact
+3. The local Ollama model receives only extracted text from those units and
+   strict rules: answer only from the material, keep the exact
    citation for every important claim, and otherwise reply
    *"Bu bilgi yüklenen ders materyallerinde bulunamadı."*
 4. The UI shows the answer, the sources used (with similarity scores and topic),
@@ -193,19 +240,19 @@ Everything runs in one Streamlit app (`app.py`). Gemini is the only AI provider.
 
 ## Adaptive assessment approach
 
-- **Generation:** source units are sampled (or retrieved for a chosen topic); Gemini
+- **Generation:** source units are sampled (or retrieved for a chosen topic); the local Ollama model
   writes one question with a required exact citation, varying the "question focus"
-  each attempt. PDF figures of those pages help the model understand the material.
+  each attempt. Visual content is not included.
 - **Checks before acceptance:** valid JSON, exact allowed citation, 4 options with
   the key among them (MCQ), not similar to the last 15 questions (normalized
   `SequenceMatcher` ≥ 0.82), no references to hidden visuals ("the figure",
   "şekildeki", "slaytta" …).
-- **Verification:** a second Gemini pass (with the same images) must confirm the
+- **Verification:** a second local-model pass must confirm the
   question is answerable from the material alone, correct, unambiguous and fully
   self-contained. Otherwise another question is generated (up to 8 attempts).
 - **Adaptation:** 2 correct answers in a row → harder; 1 wrong answer → easier.
-- **Grading:** MCQ by exact option; short and numerical answers semantically by
-  Gemini (equivalent numerical forms accepted).
+- **Grading:** MCQ by exact option; short and numerical answers are judged by the
+  local model (equivalent numerical forms may be accepted).
 
 ## Learner model (EMA)
 
@@ -268,7 +315,7 @@ you upload:
   - Summary: average of each RAGAS metric, **Refusal Accuracy**,
     **Citation / Expected Source Match**; exported to `evaluation_results.json`
     and `evaluation_results.csv`.
-  - API quota errors stop the run cleanly; with no successful case, no scores
+  - Local inference errors stop the run cleanly; with no successful case, no scores
     are shown.
 - **Question Repetition Rate** — share of accepted assessment questions that are
   similar to an earlier one (same rule as duplicate prevention).
@@ -278,8 +325,9 @@ you upload:
 
 ### Sample run (Quick Benchmark, 10 Oct 2026)
 
-One complete Quick Benchmark run on *Kümeleme.pptx* (plus one PDF in the same
-session) with `gemini-3.5-flash-lite`. Raw output:
+Historical Quick Benchmark run on *Kümeleme.pptx* (plus one PDF in the same
+session) with the original hosted Gemini version. This is not a measurement of
+the current local-only implementation. Raw output:
 [`results/quick_benchmark_2026-10-10.json`](results/quick_benchmark_2026-10-10.json)
 · [`.csv`](results/quick_benchmark_2026-10-10.csv).
 
@@ -293,8 +341,8 @@ session) with `gemini-3.5-flash-lite`. Raw output:
 | Expected Source Match | **2 / 2** | 2 in-material |
 
 > ⚠️ This is a **single, small run** (3 cases), shown as evidence that the
-> pipeline works end to end, not as a general accuracy claim. Scores depend on
-> the uploaded material, the model and API quota, and RAGAS scores vary between
+> original hosted pipeline worked end to end, not as a general accuracy claim
+> or a result for the current local version. Scores vary between
 > runs. Run the *Full Benchmark* to evaluate all 6 cases.
 
 **Example from this run** — the question *"Minkowski uzaklığı nedir?"*
@@ -380,9 +428,10 @@ course material."*); English refusal phrasings are recognised as well.
 | **Context Precision** | Are the retrieved units relevant (and ranked well) for the reference answer? |
 | **Context Recall** | Does the retrieved context contain what the reference answer needs? |
 
-RAGAS 0.4.3 uses Gemini as judge through Gemini's OpenAI-compatible endpoint
-(the `openai` Python client, no OpenAI account), and a fixed 768-dimensional Gemini
-embedding wrapper so that dimensions always match.
+RAGAS 0.4.3 uses the configured local Ollama model as its judge through
+Ollama's loopback-only OpenAI-compatible endpoint. Retrieval vectors use local
+768-dimensional feature hashing; these are lexical features, not semantic
+embeddings. Evaluation is optional and can be slow on small models.
 
 ## Known limitations
 
@@ -392,8 +441,9 @@ embedding wrapper so that dimensions always match.
   synthetic.
 - Canonical topics rely on knowledge tags; without tags the generator's
   free-text topic is used. Tag topics are broad sections.
-- Gemini free-tier quotas are small. RAGAS makes many calls per case, so the Full
-  Benchmark can hit HTTP 429; Quick Benchmark is the default.
+- Local model quality and speed depend on the selected model and available
+  memory. RAGAS makes multiple local inference calls per case; Quick Benchmark
+  is the default.
 - The benchmark is small (6 cases, one lecture deck); expected-source matching
   assumes the deck is uploaded as `Kümeleme.pptx`, which is not redistributed
   here. The English sample set in `sample_materials/` can be run instead (see
@@ -410,50 +460,84 @@ embedding wrapper so that dimensions always match.
 ## Tech stack
 
 - **Python 3.10+**, **Streamlit** (UI)
-- **Google Gemini** via the `google-genai` SDK
-  - `gemini-3.5-flash-lite` — answers, question generation and verification,
-    grading, video segmentation, knowledge tagging, RAGAS judge
-  - `gemini-embedding-2` (768-d) — retrieval embeddings
-  - Gemini Files API — video upload and understanding
-  - Gemini OpenAI-compatible endpoint — RAGAS judge via the `openai` client
+- **Ollama** — local text generation through the loopback HTTP API; default
+  model `llama3.2:1b`
+- **Local feature hashing** — deterministic lexical retrieval vectors; no
+  embedding model is downloaded or used
 - **PyMuPDF** (PDF text and figures), **python-pptx** (slides), **NumPy**
   (vector search)
-- **RAGAS 0.4.3** (evaluation), **python-dotenv**
+- **RAGAS 0.4.3** (optional local-model evaluation), **python-dotenv**
 
 ## Installation
 
-Requirements: Python 3.10 or newer and a Gemini API key
-(free at [Google AI Studio](https://aistudio.google.com/apikey)).
+Requirements: Python 3.10 or newer, Ollama installed locally, and an already
+available Ollama model. No API key, account, cloud inference, or payment method
+is required. The default model is the installed `llama3.2:1b`.
 
-```bash
-git clone https://github.com/betulaltunyuva/learnlens-ai.git LearnLens-AI
-cd LearnLens-AI
+### Windows setup
 
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS / Linux
-source venv/bin/activate
-
-pip install -r requirements.txt
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+ollama list
 ```
 
-## Environment setup
+If PowerShell blocks activation, use `.\.venv\Scripts\python.exe -m pip`
+instead. Install Ollama separately from its official website if it is not
+already installed. Start Ollama and make sure `ollama list` shows the configured
+model before launching the app.
 
-```bash
-# Windows
+### Optional TensorFlow/Keras experiments
+
+TensorFlow is not included in the default `requirements.txt` and is not
+imported when LearnLens starts. To enable the isolated Keras DNN/LSTM baselines,
+install it explicitly:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install "tensorflow>=2.16,<3"
+```
+
+Use `tensorflow_experiment.run_keras_dnn_experiment(...)` or
+`tensorflow_experiment.run_keras_lstm_experiment(...)`. Both experiments use
+the existing 20-sample/two-topic readiness gate and return an honest
+`TensorFlow/Keras is not installed` result if TensorFlow cannot be loaded.
+
+### Local configuration
+
+Create a local `.env` file:
+
+```powershell
 copy .env.example .env
-# macOS / Linux
-cp .env.example .env
 ```
 
-Edit `.env` and set your key:
+`OLLAMA_HOST` must remain local: use a loopback address on Windows, or
+`host.docker.internal` when running in Docker. `LEARNLENS_OLLAMA_MODEL` must
+match an installed model name from `ollama list`. `.env` is git-ignored and
+contains local settings only—no secrets are needed.
 
-```
-GEMINI_API_KEY=your_api_key_here
+### Optional Gemini text generation
+
+The sidebar can select `Auto (recommended)`, `Online - Gemini`, or
+`Offline - Llama (local)`. Auto uses Gemini when a key and internet connection
+are available, then falls back to local Ollama. Offline mode never calls Gemini.
+
+Set these names in `.env`:
+
+```text
+GEMINI_API_KEY
+GOOGLE_API_KEY
+LEARNLENS_GEMINI_MODEL
 ```
 
-`.env` is git-ignored. Never commit a real key.
+Use one Gemini API-key variable, not both. Online mode sends retrieved passages
+to Google's API; leave the app in Offline mode for local-only processing.
+
+If you choose to install a model yourself, review its size and license first.
+For example, `ollama pull llama3.2:1b` downloads model weights; do not run it
+unless you want that download. For local image Q&A, install the configured
+vision model with `ollama pull llava:7b`, then refresh the app. The Image
+Understanding tab displays the configured vision model name.
 
 ## Run
 
@@ -461,25 +545,55 @@ GEMINI_API_KEY=your_api_key_here
 streamlit run app.py
 ```
 
-The app opens at http://localhost:8501. Local files created while running
-(all git-ignored): `learner_state.json`, `knowledge_tags.json`,
-`evaluation_results.json`, `evaluation_results.csv`.
+On Windows, run `.\run_app.ps1` to execute local validation first and then
+start Streamlit on port 8501.
+
+### Docker
+
+With Ollama running on the host machine, start the packaged app with:
+
+```powershell
+docker compose up --build
+```
+
+The container connects only to the host's loopback Ollama service through
+`host.docker.internal:11434`. Model weights remain managed by Ollama on the
+host; no hosted inference endpoint is configured.
+
+The app opens at http://localhost:8501. If that port is already in use, choose
+another host port before starting Compose:
+
+```powershell
+$env:LEARNLENS_PORT = "8502"
+docker compose up --build
+```
+
+AI requests go only to Ollama on the same computer. PDFs, PowerPoint decks, video transcription and image question
+answering are processed locally. The first
+video run downloads the Faster-Whisper `tiny` model from Hugging Face, then
+transcribes locally. GPU is attempted first and CPU fallback is automatic.
+Set `LEARNLENS_WHISPER_MODEL=base` in `.env` if you prefer accuracy over speed.
+Local files created while running (all git-ignored): `learnlens.db`,
+`knowledge_tags.json`, `evaluation_results.json`, `evaluation_results.csv`.
+Existing `learner_state.json` files are imported into SQLite on first run.
 
 ## Demo flow
 
 1. **🧭 Learner Profile** — choose a level, enter a goal, pick a style, *Save*.
-2. **📽️ Slide / 📄 PDF / 🎞️ Video** — upload the files from
+2. **📽️ Slide / 📄 PDF / 🎞️ Video** — upload material from
    [`sample_materials/`](sample_materials/) (or your own lecture material).
+   Video speech is transcribed locally and can be queried with timestamp
+   citations; image questions require the installed local vision model.
 3. **🧭 Learner Profile → Start Diagnostic** — answer 3 questions; the level and
    starting difficulty update (see the sidebar).
 4. **🎓 Unified Tutor** — ask *"When should I use hierarchical clustering
-   instead of k-means?"* → one answer citing slides, a PDF page and a video
-   timestamp, plus a learner-model update; then ask *"What is backpropagation
+   instead of k-means?"* → an answer citing slide or PDF text, plus a
+   learner-model update; then ask *"What is backpropagation
    in neural networks?"* → refusal. Open *🧩 Knowledge Structure*.
 5. **🧠 Adaptive Assessment** — answer a few questions; watch *Next Difficulty*.
 6. **📊 Mastery Dashboard** — topic accuracy, EMA mastery, recommended focus,
    Likely Misconceptions.
-7. **🧪 Evaluation** — single RAGAS question, then *Run Benchmark* (Quick); show
+7. **🧪 Evaluation** — local-model evaluation and *Run Benchmark* (Quick); show
    the repetition rate and the synthetic personalization table.
 
 ## Repository structure
@@ -489,7 +603,7 @@ LearnLens-AI/
 ├── app.py                   # Streamlit application (all features)
 ├── .streamlit/config.toml   # UI theme (colors, font)
 ├── requirements.txt         # Python dependencies
-├── .env.example             # Template for GEMINI_API_KEY
+├── .env.example             # Local Ollama configuration (no secrets)
 ├── .gitignore
 ├── evaluation_testset.json  # Team-built benchmark test set
 ├── results/                 # Snapshot of a complete Quick Benchmark run
@@ -513,9 +627,9 @@ LearnLens-AI/
   from the student's own wrong answers, never invented.
 - Simulated results are labelled as simulated; no real-student outcomes are
   claimed.
-- Learner data stays local in a JSON file. Uploaded material is sent to the
-  Gemini API for processing, subject to Google's API terms. Do not upload
-  material you are not allowed to share with that service.
+- Learner data, uploaded material, retrieval and model inference stay on the
+  local machine. The Ollama client accepts loopback addresses only; it does not
+  call hosted AI services.
 - LearnLens supports learning; it does not replace teachers or official course
   information.
 
@@ -525,8 +639,9 @@ AI coding assistants including ChatGPT and Claude Code were used during
 development for code review, debugging and implementation assistance. All
 generated code was reviewed, integrated and tested by the project author.
 
-At runtime, the application itself uses Google Gemini models as described in the
-tech stack.
+The current application uses a locally installed Ollama text model. The original
+repository used hosted Gemini; its video and image understanding have not yet
+been replaced with local equivalents.
 
 ## License
 
